@@ -2,18 +2,18 @@
   "version": 2,
   "builds": [
     {
-      "src": "src/server.js", // Asegúrate de que este es el archivo correcto
+      "src": "src/server.js",
       "use": "@vercel/node"
     }
   ],
   "routes": [
     {
-      "src": "/api/(.*)", // Redirige cualquier ruta que comience con /api
+      "src": "/api/(.*)",
       "dest": "src/server.js"
     },
     {
-      "src": "/(.*)", // Rutas para cualquier otro acceso
-      "dest": "src/server.js" // Esto es para manejar rutas como la raíz
+      "src": "/(.*)", 
+      "dest": "src/server.js"
     }
   ]
 }
