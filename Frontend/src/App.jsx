@@ -17,7 +17,7 @@ function App() {
       ]
     },
     {
-      path: 'registerAuth',
+      path: '/registerAuth',
       element: <Register/>
     },
     {
