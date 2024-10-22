@@ -7,7 +7,7 @@ import { FRONTED_URL } from "./config.js";
 const app = express();
 
 const corsOptions = {
-  origin: FRONTED_URL,
+  origin: "https://cocteleria.vercel.app",
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true,
