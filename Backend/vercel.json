@@ -1,15 +1,19 @@
 {
-    "version": 2,
-    "builds": [
-        {
-            "src": "server.js",
-            "use": "@vercel/node"
-        }
-    ],
-    "routes": [
-        {
-            "src": "/(.*)",
-            "dest": "/server.js"
-        }
-    ]
+  "version": 2,
+  "builds": [
+    {
+      "src": "src/server.js", // Asegúrate de que este es el archivo correcto
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/(.*)", // Redirige cualquier ruta que comience con /api
+      "dest": "src/server.js"
+    },
+    {
+      "src": "/(.*)", // Rutas para cualquier otro acceso
+      "dest": "src/server.js" // Esto es para manejar rutas como la raíz
+    }
+  ]
 }
