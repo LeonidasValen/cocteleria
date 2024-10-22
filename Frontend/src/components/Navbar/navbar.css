@@ -51,21 +51,32 @@
 
 .navSearch{
     position: relative;
-    background: #181715;
-    width: 100%;
     max-width: 250px;
-    height: 100%;
     display: flex;
     align-items: center;
-    border: 1px solid #c9c9c9;
-    border-radius: 22px;
+    justify-content: flex-start;
+    width: 35px;
+    height: 35px;
+    transition: width .5s cubic-bezier(.9,0,.3,.9);
+}
+
+.navSearch.show{
+    width: 240px;
+
 }
 
 .nSearchContent{
     display: flex;
     align-items: center;
-    padding: 2px 8px;
-    width: 100%;
+    justify-content: center;
+    border-radius: 22px;
+    border: 1px solid transparent;
+    transition: 0.5s ease;
+}
+
+.navSearch.show .nSearchContent{
+    background: #181715;
+    border: 1px solid rgb(54, 54, 54);
 }
 
 .nSearchContent button{
@@ -73,25 +84,30 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    width: 35px;
-    height: 35px;
     border: 0;
     background: transparent;
-    border-radius: 10px 0 0 10px;
-    padding: 0;
+    padding: 6px;
     color: var(--Font);
 }
 
 .nSearchContent input{
+    position: relative;
     color: #ffffff;
     width: 100%;
     font-size: 16px;
     font-weight: 600;
     background: transparent;
-    height: 40px;
+    height: 100%;
     padding: 10px;
     outline: none;
     border: 0;
+    padding: 0;
+    opacity: 0;
+    transition: opacity, width 1.5s ease;
+}
+.navSearch.show input{
+    opacity: 1;
+    pointer-events: initial;
 }
 
 .searchResult{
@@ -141,4 +157,21 @@
     width: 34px;
     object-fit: cover;
     border-radius: 50%;
+}
+
+.item{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.item .logout{
+    background: #e77912;
+    border-radius: 16px;
+    padding: 4px 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--Font);
+    border: none;
 }

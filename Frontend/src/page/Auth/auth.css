@@ -1,0 +1,53 @@
+.formContet{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin: 70px auto;
+    width: 36%;
+    border-radius: 10px;
+    border: 1px solid rgb(154, 113, 1);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 24px 48px;
+}
+
+.register{
+    display: flex;
+    flex-direction: column;
+    padding: 10px 30px;
+    background: #202020;
+    gap: 1rem;
+    width: 100%;
+}
+
+.rInputs{
+    display: flex;
+    flex-direction: column;
+}
+
+.rInputs form label {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.rInputs input {
+    padding: 10px;
+    outline: transparent solid 2px;
+    outline-offset: 2px;
+    accent-color: rgb(16, 63, 239);
+    border-radius: 0.375rem;
+    border: 1px solid rgba(0, 0, 0, 0.16);
+}
+
+.rError{
+    color: rgb(255, 46, 46);
+}
+
+form button {
+    padding: 10px;
+    border: none;
+    background: rgb(196, 109, 10);
+    color: white;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 6px;
+}

@@ -3,9 +3,9 @@ import './foooter.css'
 
 export function Footer() {
     return (
-        <div class="copy">
+        <div className="copy">
             <span>© Copyright 2024 - Echo por Leonel Valenzuela</span>
-            <ul class="links"><li>
+            <ul className="links"><li>
                 <a href="" aria-label="link github" target="_blank">
                     <IconGithub />
                 </a>

@@ -1,4 +1,4 @@
-import { ListCoctails } from '../components/ListCoctails/ListCoctails'
+import { ListCoctails } from '../../components/ListCoctails/ListCoctails'
 import './home.css'
 
 export function Home() {
