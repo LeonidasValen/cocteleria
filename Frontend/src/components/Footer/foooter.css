@@ -1,0 +1,30 @@
+.copy{
+    margin-top: 2rem;
+    border-top: 1px solid #777777;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 3rem;
+    padding-right: 3rem;
+    margin-inline: 3rem;
+    padding-bottom: 1.5rem;
+    padding-top: 1rem;
+}
+
+.copy .links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.copy .links a{
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    background: transparent;
+    border-radius: 50%;    
+}
+
+.copy .links a:hover{
+    background-color: #df751e;
+}

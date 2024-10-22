@@ -1,0 +1,52 @@
+.coctailArticle{
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border: 1px solid #363636;
+    background: #202020;
+    border-radius: 10px;
+}
+
+.coctailImg{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 200px;
+    margin-bottom: 0.75rem;
+}
+
+.coctailImg img{
+    width: 100%;
+    height: 100%;
+    max-width: 320px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.coctailName{
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: .75rem;
+    line-height: 1;
+}
+
+.category{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+}
+
+.category .difficulty{
+    color: #dd8430;
+    padding: 4px 10px;
+    border-radius: 16px;
+    font-weight: 500;
+}
+
+.category .isAlcoholic{
+    background: #e77912;
+    border-radius: 16px;
+    padding: 4px 10px;
+    font-weight: 500;
+}
