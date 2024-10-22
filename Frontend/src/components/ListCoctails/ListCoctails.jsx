@@ -8,7 +8,7 @@ export function ListCoctails() {
         { id: 3, name: "Piña Colada", image: "./img/gintonic.jpg", difficulty: "Fácil", alcoholic: true },
         { id: 4, name: "Daiquiri", image: "./img/gintonic.jpg", difficulty: "Medio", alcoholic: true },
         { id: 5, name: "Martini", image: "./img/gintonic.jpg", difficulty: "Fácil", alcoholic: true },
-        { id: 6, name: "Cosmopolitan", image: "./img/gintonic.jpg", difficulty: "Medio", alcoholic: true },
+        { id: 6, name: "Old fashioned iced tea", image: "./img/gintonic.jpg", difficulty: "Medio", alcoholic: true },
         { id: 7, name: "Negroni", image: "./img/gintonic.jpg", difficulty: "Difícil", alcoholic: true },
         { id: 8, name: "Limonada de Fresa", image: "./img/gintonic.jpg", difficulty: "Fácil", alcoholic: false },
     ]
