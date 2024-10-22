@@ -28,7 +28,7 @@ export const AuthProvider = ({children}) =>{
 
     const signIn = async(user) =>{
         const res = await fetchData({
-            url: '/auth/login',
+            url: 'https://cocteleria-xcw3.vercel.app/auth/login',
             method: 'post',
             data: user,
         })
