@@ -34,6 +34,7 @@ export function Navbar() {
         </ul>
         <div className="item">
           <Search />
+          <Link to="/loginAuth" className="login"></Link>
           {isAuthenticated && user && (
             <button className="logout" onClick={handleLogout}>
               Cerrar sesión
