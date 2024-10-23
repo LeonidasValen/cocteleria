@@ -39,7 +39,7 @@ export const AuthProvider = ({children}) =>{
 
     const logout = async () => {
         await fetchData({
-            url: '/auth/logout',
+            url: 'https://cocteleria-back.vercel.app/auth/logout',
             method: 'post',
         });
 
