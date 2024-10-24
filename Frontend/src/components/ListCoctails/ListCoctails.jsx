@@ -1,6 +1,10 @@
+import { useState } from 'react';
+import DetailCoctel from '../DetailCoctel/DetailCoctel';
 import './listCoctails.css'
 
 export function ListCoctails() {
+
+    const [openModal, setOpenModal] = useState(false);
 
     const cocktails = [
         { id: 1, name: "Margarita", image: "./img/gintonic.jpg", difficulty: "Fácil", alcoholic: true },
@@ -18,7 +22,7 @@ export function ListCoctails() {
             {
                 cocktails.length > 0 ? (
                     cocktails.map((coctail) => (
-                        <article className='coctailArticle' key={coctail.id}>
+                        <article className='coctailArticle' key={coctail.id} onClick={()=>setOpenModal(!openModal)}>
                             <header className='coctailImg'>
                                 <img src={coctail.image} alt={coctail.name} />
                             </header>
@@ -33,6 +37,7 @@ export function ListCoctails() {
                     <h1>ningun coctail</h1>
                 )
             }
+            {openModal && <DetailCoctel setOpenModal={setOpenModal}/>}
         </>
     )
 }

@@ -1,4 +1,12 @@
-.coctailArticle{
+.ListCoctails {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+}
+
+
+.coctailArticle {
     display: flex;
     flex-direction: column;
     padding: 1rem;
@@ -7,7 +15,7 @@
     border-radius: 10px;
 }
 
-.coctailImg{
+.coctailImg {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -15,38 +23,56 @@
     margin-bottom: 0.75rem;
 }
 
-.coctailImg img{
+.coctailImg img {
     width: 100%;
     height: 100%;
-    max-width: 320px;
     border-radius: 10px;
     object-fit: cover;
 }
 
-.coctailName{
+.coctailName {
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: .75rem;
     line-height: 1;
 }
 
-.category{
+.category {
     display: flex;
     align-items: center;
     gap: 10px;
     font-size: 0.85rem;
 }
 
-.category .difficulty{
+.category .difficulty {
     color: #dd8430;
     padding: 4px 10px;
     border-radius: 16px;
     font-weight: 500;
 }
 
-.category .isAlcoholic{
+.category .isAlcoholic {
     background: #e77912;
     border-radius: 16px;
     padding: 4px 10px;
     font-weight: 500;
+}
+
+
+@media screen and (max-width: 1200px) {
+    .ListCoctails {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (max-width: 800px) {
+    .ListCoctails {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .ListCoctails {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }

@@ -28,3 +28,20 @@
 .copy .links a:hover{
     background-color: #df751e;
 }
+
+@media screen and (max-width: 800px) {
+    .copy{
+        margin-inline: 1rem;
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .copy{
+        margin-inline: 0;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+

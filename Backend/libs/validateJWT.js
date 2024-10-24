@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken"
-import dotenv from "dotenv"
-dotenv.config()
+import { JWT_SECRET } from "../src/config.js"
 
 export const validateToken = (req, res, next)=>{
     //verifica  si tiene el token
@@ -8,7 +7,7 @@ export const validateToken = (req, res, next)=>{
     if(!token) return res.status(401).json({message: "no estas autenticado"})
 
     //verifica el token y trae los datos del usuario
-    jwt.verify(token, process.env.JWT_SECRET, (err, decodedToken)=>{
+    jwt.verify(token, JWT_SECRET, (err, decodedToken)=>{
         if(err) return res.status(403).json({message: "Token invalido"});
         
         req.user = decodedToken.id; // Guarda todo el decodedToken en req.user

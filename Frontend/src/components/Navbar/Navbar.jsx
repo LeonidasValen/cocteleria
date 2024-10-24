@@ -22,23 +22,25 @@ export function Navbar() {
   return (
     <nav className="navbar">
       <header className="navHeader">
-        <div className="navLogo">
+        <Link to={"/"} className="navLogo">
           <img src="./icons/logo.png" alt="logo" />
-        </div>
+        </Link>
         <ul className="navItems">
-          <li><Link to="/">Alcohol</Link></li>
-          <li><Link to="/">Sin alcohol</Link></li>
-          <li><Link to="/">Aperitivos</Link></li>
-          <li><Link to="/">Fuerte</Link></li>
-          <li><Link to="/">Fácil</Link></li>
+          <li><Link to="/?cat=Alcohol">Alcohol</Link></li>
+          <li><Link to="/?cat=Notalcohol">Sin alcohol</Link></li>
+          <li><Link to="/?cat=Aperitivos">Aperitivos</Link></li>
+          <li><Link to="/?cat=Fuerte">Fuerte</Link></li>
+          <li><Link to="/?cat=Facil">Fácil</Link></li>
         </ul>
         <div className="item">
           <Search />
-          <Link to="/loginAuth" className="login"></Link>
           {isAuthenticated && user && (
+            <>
             <button className="logout" onClick={handleLogout}>
               Cerrar sesión
             </button>
+            <Link to="/formCoctel">Agregar cóctel</Link>
+            </>
           )
           }
         </div>
