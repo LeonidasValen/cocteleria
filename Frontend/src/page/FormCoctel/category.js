@@ -1,4 +1,4 @@
-export const colourOptions = [
+export const Cocteles = [
     { value: 'Con alchohol', label: 'Con alchohol'},
     { value: 'Sin alchohol', label: 'Sin alchohol'},
     { value: 'Fácil', label: 'Fácil'},

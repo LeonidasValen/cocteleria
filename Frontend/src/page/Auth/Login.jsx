@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-import { useAuth } from "../../context/AuthConext";
+import { useAuth } from "../../context/AuthContext";
 import './auth.css'
 
 export function Login() {

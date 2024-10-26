@@ -34,7 +34,7 @@ export const AuthProvider = ({children}) =>{
         })
         setUser(res)
         setAuthenticated(true)
-        localStorage.setItem('session_username', res.title);
+        localStorage.setItem('session_username', res.username);
     }
 
     const logout = async () => {

@@ -8,6 +8,10 @@
     padding-inline: 1rem;
 }
 
+.field-error{
+    color: red;
+}
+
 .imgCoctel{
     position: relative;
     background: #202020;

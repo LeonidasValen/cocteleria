@@ -1,26 +1,51 @@
-import { useState } from "react";
-import { IconCam } from "../../assets/icons";
+import { useEffect, useState } from "react";
+import { Cocteles } from './category';
 import { useNavigate } from "react-router-dom";
 import Select from 'react-select';
-import { colourOptions } from './category';
+import { IconCam } from "../../assets/icons";
+import { useAuth } from "../../context/AuthContext";
+import { useCoctel } from "../../context/CoctelContext";
 import './formCoctel.css'
 
 export function FormCoctel() {
 
+    const { loading, isAuthenticated, user } = useAuth();
+
+    const { postCoctel } = useCoctel();
+
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const storedUsername = localStorage.getItem('session_username');
+
+        if (!storedUsername) {
+            navigate('/');  // Si no hay usuario en localStorage, redirige inmediatamente.
+        } else if (!loading && (!isAuthenticated || !user)) {
+            // Solo navega cuando los datos ya no están cargando y el usuario no está autenticado.
+            navigate('/');
+        }
+    }, [loading, isAuthenticated, user, navigate]);
+
 
     const [errors, setErrors] = useState({});
 
     // State inicial del formulario con varios campos
     const [formData, setFormData] = useState({
-        title: '',
-        metodo: '',
-        historia: '',
-        nota: '',
+        name: '',
+        method: '',
+        history: '',
+        note: '',
         file: null,
+        typeMethod: 'Metodo directo',
+        glassType: '',
+        categories: [],
+        ingredients: [],
+        garnish: [],
+        hasAlcohol: false,
+        difficulty: 'Fácil',
     });
 
-    // Maneja los cambios en los campos de texto
+    // Maneja los cambios en los campos de inputs
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
@@ -33,50 +58,109 @@ export function FormCoctel() {
         setFormData({ ...formData, file: selectedFile });
     };
 
-    // Manejo de inputs dinámicos
-    const [inputsIngredients, setInputsIngredients] = useState([{ value: '' }]);
-
-    const handleAddInput = () => {
-        setInputsIngredients([...inputsIngredients, { value: '' }]);
+    // Maneja cambios en el select de react-select
+    const handleSelectChange = (selectedOptions) => {
+        const selectedCategories = selectedOptions.map(option => option.value);
+        setFormData({ ...formData, categories: selectedCategories });
     };
 
-    const handleRemoveInput = (index) => {
-        const newInputs = inputsIngredients.filter((_, i) => i !== index);
-        setInputsIngredients(newInputs);
+    const handleChangeCheck = (e) => {
+        const { name, type, checked, value } = e.target;
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.checked, // El valor del checkbox se captura correctamente
+        });
     };
 
-    const handleInputChange = (index, event) => {
-        const newInputs = inputsIngredients.map((input, i) =>
-            i === index ? { value: event.target.value } : input
+    // Manejo de inputs dinamicos
+    const handleAddInput = (type) => {
+        setFormData({
+            ...formData,
+            [type]: [...formData[type], ''],
+        });
+    };
+
+    const handleRemoveInput = (index, type) => {
+        const updatedList = formData[type].filter((_, i) => i !== index);
+        setFormData({
+            ...formData,
+            [type]: updatedList,
+        });
+    };
+
+    const handleInputChange = (index, event, type) => {
+        const updatedList = formData[type].map((item, i) =>
+            i === index ? event.target.value : item
         );
-        setInputsIngredients(newInputs);
+        setFormData({
+            ...formData,
+            [type]: updatedList,
+        });
     };
 
-    // Manejo de inputs dinámicos
-    const [inputsGarnish, setInputsGarnish] = useState([{ value: '' }]);
-
-    const handleAddInputGarnish = () => {
-        setInputsGarnish([...inputsGarnish, { value: '' }]);
-    };
-
-    const handleRemoveInputGarnish = (index) => {
-        const newInputs = inputsGarnish.filter((_, i) => i !== index);
-        setInputsGarnish(newInputs);
-    };
-
-    const handleInputChangeGarnish = (index, event) => {
-        const newInputs = inputsGarnish.map((input, i) =>
-            i === index ? { value: event.target.value } : input
-        );
-        setInputsGarnish(newInputs);
-    };
-
-    // Manejo de envío del formulario
-    const handleSubmit = (e) => {
+    // Envio del formulario
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // Aquí puedes realizar la lógica para enviar los datos del formulario
-        console.log('Datos del formulario:', formData, inputs, inputsGarnish);
-        // Aquí iría la lógica para subir la información del cóctel (ej. llamar a una API)
+
+        const errors = {};
+        if (!formData.name || !formData.categories.length || !formData.ingredients.length || !formData.garnish.length || !formData.typeMethod || !formData.glassType || !formData.method || !formData.history || !formData.note) {
+            errors.name = 'El campo "Nombre" es obligatorio';
+            errors.categories = 'La categoría es obligatoria';
+            errors.ingredients = 'El ingrediente es obligatorio';
+            errors.garnish = 'El garnish es obligatorio';
+            errors.typeMethod = 'El tipo de metodo es obligatorio';
+            errors.glassType = 'El tipo de vaso es obligatorio';
+            errors.method = 'El metodo es obligatorio';
+            errors.history = 'La historia es obligatoria';
+            errors.note = 'La nota es obligatoria';
+        }
+        if (formData.categories.length < 2) {
+            errors.categories = 'debes seleccionar al menos 2 categorías';
+        }
+        if (formData.ingredients.length < 2) {
+            errors.ingredients = 'debes ingresar al menos 2 ingredientes';
+        }
+        if (formData.garnish.length < 1) {
+            errors.garnish = 'debes ingresar al menos 1 garnish';
+        }
+        if (!formData.file) {
+            errors.file = 'Debes subir una foto de portada';
+        } else if (formData.file instanceof File) {
+            const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+            if (!allowedTypes.includes(formData.file.type)) {
+                errors.file = 'Debes agregar una foto válida (JPEG, PNG, JPG)';
+            }
+        }
+
+        if (Object.keys(errors).length > 0) {
+            setErrors(errors);
+            return;
+        }
+
+        const formSend = new FormData();
+        formSend.append("name", formData.name);
+        formSend.append("categories", formData.categories);
+        formSend.append("ingredients", formData.ingredients);
+        formSend.append("garnish", formData.garnish);
+        formSend.append("typeMethod", formData.typeMethod);
+        formSend.append("glassType", formData.glassType);
+        formSend.append("method", formData.method);
+        formSend.append("history", formData.history);
+        formSend.append("note", formData.note);
+        formSend.append("file", formData.file);
+        formSend.append("hasAlcohol", formData.hasAlcohol);
+        formSend.append("difficulty", formData.difficulty);
+
+        formSend.forEach((value, key) => {
+            console.log(`${key}: ${value}`);
+        });
+
+        try {
+            await postCoctel(formSend);
+            // navigate('/coctel');
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (
@@ -89,89 +173,118 @@ export function FormCoctel() {
                     {!formData.file && <IconCam />}
                     <input type="file" accept="image/png, image/jpeg, image/jpg" onChange={handleFileChange} />
                 </div>
+                {errors.file && <div className="field-error">{errors.file}</div>}
 
                 <div className="inputTitle inputRow">
-                    <label htmlFor="title">Nombre:</label>
-                    <input type="text" name="title" id="title" value={formData.title} onChange={handleChange} placeholder="Nombre" />
+                    <label htmlFor="name">Nombre:</label>
+                    <input type="text" name="name" id="name" value={formData.name} onChange={handleChange} placeholder="Nombre" />
                 </div>
+                {errors.name && <div className="field-error">{errors.name}</div>}
 
                 <div className="inputCategoria inputRow">
                     <label htmlFor="categoria">Categorías:</label>
                     <Select
                         isMulti
-                        name="colors"
-                        options={colourOptions}
+                        name="categories"
+                        options={Cocteles}
                         className="basic-multi-select"
                         classNamePrefix="select"
+                        value={Cocteles.filter(option => formData.categories.includes(option.value))}
+                        onChange={handleSelectChange}
                     />
+                </div>
+                {errors.categories && <div className="field-error">{errors.categories}</div>}
+
+                <div>
+                    <label>Tiene alcohol?</label>
+                    <input type="checkbox"  name="hasAlcohol" checked={formData.hasAlcohol} onChange={handleChangeCheck} />
+                </div>
+
+                <div>
+                    <label>Dificultad:</label>
+                    <select name="difficulty" value={formData.difficulty} onChange={handleChange}>
+                        <option value="Fácil">Fácil</option>
+                        <option value="Medio">Medio</option>
+                        <option value="Difícil">Difícil</option>
+                    </select>
                 </div>
 
                 <div className="fIngredients inputRow">
+                    {/* Inputs Dinámicos: Ingredientes */}
                     <div className="ingredientsField">
                         <label>Ingredientes:</label>
-                        {inputsIngredients.map((input, index) => (
+                        {formData.ingredients.map((ingredient, index) => (
                             <div key={index} style={{ marginBottom: '10px' }}>
                                 <input
                                     type="text"
-                                    value={input.value}
-                                    onChange={(event) => handleInputChange(index, event)}
+                                    value={ingredient}
+                                    onChange={(event) => handleInputChange(index, event, 'ingredients')}
                                     placeholder={`Ingrediente ${index + 1}`}
                                 />
-                                {inputsIngredients.length > 1 && (
-                                    <button type="button" onClick={() => handleRemoveInput(index)}>X</button>
+                                {formData.ingredients.length > 1 && (
+                                    <button type="button" onClick={() => handleRemoveInput(index, 'ingredients')}>X</button>
                                 )}
                             </div>
                         ))}
-                        <button type="button" onClick={handleAddInput}>Agregar Ingrediente</button>
+                        <button type="button" onClick={() => handleAddInput('ingredients')}>Agregar Ingrediente</button>
+                        {errors.ingredients && <div className="field-error">{errors.ingredients}</div>}
                     </div>
+
+                    {/* Inputs Dinámicos: Garnish */}
                     <div className="garnishField">
                         <label>Garnish:</label>
-                        {inputsGarnish.map((inputGarnish, index) => (
+                        {formData.garnish.map((garnish, index) => (
                             <div key={index} style={{ marginBottom: '10px' }}>
                                 <input
                                     type="text"
-                                    value={inputGarnish.value}
-                                    onChange={(event) => handleInputChangeGarnish(index, event)}
+                                    value={garnish}
+                                    onChange={(event) => handleInputChange(index, event, 'garnish')}
                                     placeholder={`Garnish ${index + 1}`}
                                 />
-                                {inputsGarnish.length > 1 && (
-                                    <button type="button" onClick={() => handleRemoveInputGarnish(index)}>X</button>
+                                {formData.garnish.length > 1 && (
+                                    <button type="button" onClick={() => handleRemoveInput(index, 'garnish')}>X</button>
                                 )}
                             </div>
                         ))}
-                        <button type="button" onClick={handleAddInputGarnish}>Agregar garnish</button>
+                        <button type="button" onClick={() => handleAddInput('garnish')}>Agregar Garnish</button>
+                        {errors.garnish && <div className="field-error">{errors.garnish}</div>}
                     </div>
                 </div>
 
                 <div className="inputTipo">
                     <label htmlFor="typeMethod ">Tipo de metodo:</label>
-                    <select name="typeMethod" id="typeMethod">
+                    <select name="typeMethod" id="typeMethod" value={formData.typeMethod} onChange={handleChange}>
                         <option value="Metodo directo">Metodo directo</option>
                         <option value="Machacado">Machacado</option>
                         <option value="Refrescado">Refrescado</option>
                         <option value="Agitado">Agitado</option>
                     </select>
                 </div>
+                {errors.typeMethod && <div className="field-error">{errors.typeMethod}</div>}
 
                 <div className="inputTipo">
                     <label htmlFor="vaso">Vaso:</label>
-                    <input type="text" id="vaso" placeholder="Vaso"/>
+                    <input type="text" id="vaso" name="glassType" value={formData.glassType} onChange={handleChange} placeholder="Vaso" />
                 </div>
+                {errors.glassType && <div className="field-error">{errors.glassType}</div>}
 
                 <div className="inputMetodo inputRow">
-                    <label htmlFor="metodo">Metodo:</label>
-                    <textarea name="metodo" id="metodo" value={formData.metodo} onChange={handleChange} placeholder="Metodo"></textarea>
+                    <label htmlFor="method">Metodo:</label>
+                    <textarea name="method" id="method" value={formData.method} onChange={handleChange} placeholder="Metodo"></textarea>
                 </div>
+                {errors.method && <div className="field-error">{errors.method}</div>}
 
                 <div className="inputHistoria inputRow">
-                    <label htmlFor="historia">Historia:</label>
-                    <textarea name="historia" id="historia" value={formData.historia} onChange={handleChange} placeholder="Historia"></textarea>
+                    <label htmlFor="history">Historia:</label>
+                    <textarea name="history" id="history" value={formData.history} onChange={handleChange} placeholder="Historia"></textarea>
                 </div>
+                {errors.history && <div className="field-error">{errors.history}</div>}
 
                 <div className="inputNota inputRow">
-                    <label htmlFor="nota">Nota:</label>
-                    <textarea name="nota" id="nota" value={formData.nota} onChange={handleChange} placeholder="Nota"></textarea>
+                    <label htmlFor="note">Nota:</label>
+                    <textarea name="note" id="note" value={formData.note} onChange={handleChange} placeholder="Nota"></textarea>
                 </div>
+                {errors.note && <div className="field-error">{errors.note}</div>}
 
                 <button type="submit">Subir cóctel</button>
             </form>
