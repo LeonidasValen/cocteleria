@@ -5,7 +5,7 @@ import './listCoctails.css'
 
 export function ListCoctails() {
 
-    const { getCoctels, coctels } = useCoctel()
+    const {loading, getCoctels, coctels } = useCoctel()
 
     useEffect(() => {
         getCoctels()
@@ -13,6 +13,7 @@ export function ListCoctails() {
 
     const [openModal, setOpenModal] = useState(false);
 
+    if (loading) return <h1>cargando...</h1>
 
     return (
         <>
