@@ -1,39 +1,41 @@
 import mongoose from "mongoose";
 
 const CoctelSchema = new mongoose.Schema({
+    fileUrl: {
+        type: String,
+        required: true,
+    },
     name: {
         type: String,
         required: true,
     },
-    ingredients: [
-        {
-            ingredient: { type: String, required: true },
-            amount: { type: String, required: true }, // e.g., "50ml", "1 slice"
-        }
-    ],
-    method: {
-        type: String,
+    ingredients: [String],
+    garnish: [String],
+    hasAlcohol: {
+        type: Boolean,
         required: true,
     },
-    garnish: {
-        type: String,
-        required: true,
-    },
-    image: {
-        type: String,
+    difficulty: {
+        type: String, // e.g., "Easy", "Medium", "Hard"
         required: true,
     },
     glassType: {
         type: String, // e.g., "Highball", "Martini"
-    },
-    category: {
-        type: String, // e.g., "Clásico", "Moderno", "Sin alcohol"
-    },
-    isAlcoholic: {
-        type: Boolean,
         required: true,
     },
-    notes: {
+    typeMethod: {
+        type: String, // e.g., "Highball", "Martini"
+        required: true,
+    },
+    categories: [String],
+    method: {
+        type: String,
+        required: true,
+    },
+    history: {
+        type: String,
+    },
+    note: {
         type: String,
     },
 },

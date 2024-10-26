@@ -7,17 +7,3 @@
     padding-inline: 1.4rem;
 }
 
-.ListCoctails{
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(4,1fr);
-    gap: 30px;
-    row-gap: 40px;
-}
-
-@media screen and (max-width: 1200px){
-    .ListCoctails{
-        grid-template-columns: repeat(3,1fr);
-    }
-    
-}
