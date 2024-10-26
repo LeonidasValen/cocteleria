@@ -21,7 +21,7 @@ export const CoctelProvider = ({children}) =>{
     const postCoctel = async(data) =>{
         console.log(data)
         await fetchData({
-            url: '/coctel/postCoctel',
+            url: 'https://cocteleria-back.vercel.app/coctel/postCoctel',
             method: 'post',
             data: data,
             headers: {
@@ -32,7 +32,7 @@ export const CoctelProvider = ({children}) =>{
 
     const getCoctels = async() =>{
         const res = await fetchData({
-            url: '/coctel/getCoctels',
+            url: 'https://cocteleria-back.vercel.app/coctel/getCoctels',
             method: 'get',
         })
         setCoctels(res)
