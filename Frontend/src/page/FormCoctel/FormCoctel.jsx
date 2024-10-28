@@ -21,7 +21,7 @@ export function FormCoctel() {
         if (!storedUsername) {
             navigate('/');  // Si no hay usuario en localStorage, redirige inmediatamente.
         } else if (!loading && (!isAuthenticated || !user)) {
-            // Solo navega cuando los datos ya no están cargando y el usuario no está autenticado.
+            // Solo navega cuando los datos ya no estan cargando y el usuario no está autenticado.
             navigate('/');
         }
     }, [loading, isAuthenticated, user, navigate]);
