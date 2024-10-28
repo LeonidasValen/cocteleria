@@ -2,17 +2,6 @@
   "rewrites": [
     {
       "source": "/auth/(.*)", 
-<<<<<<< HEAD
-      "destination": "/auth/$1"
-    },
-    {
-      "source": "/user/(.*)", 
-      "destination": "/user/$1"
-    },
-    {
-      "source": "/coctel/(.*)", 
-      "destination": "/coctel/$1"
-=======
       "destination": "https://cocteleria-back.vercel.app/auth/$1"
     },
     {
@@ -22,7 +11,6 @@
     {
       "source": "/coctel/(.*)", 
       "destination": "https://cocteleria-back.vercel.app/coctel/$1"
->>>>>>> main
     },
     {
       "source": "/(.*)", 
