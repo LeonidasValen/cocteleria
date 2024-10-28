@@ -45,7 +45,6 @@ export const IconCoctel = () => {
     )
 }
 
-//<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="512" height="512" x="0" y="0" viewBox="0 0 512.001 512.001" style="enable-background:new 0 0 512 512" xml:space="preserve" >
 export const IconCoctail = () => {
     return (
         <svg stroke="currentColor" fill="currentColor" strokeWidth="0" viewBox="0 0 512.001 512.001" height="200px" width="200px" xmlns="http://www.w3.org/2000/svg" className="">
