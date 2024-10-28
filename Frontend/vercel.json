@@ -16,7 +16,7 @@
   "redirects": [
     {
       "source": "/(.*)",
-      "destination": "/index.html",
+      "destination": "/",
       "permanent": true
     }
   ]
