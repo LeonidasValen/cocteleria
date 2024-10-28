@@ -1,6 +1,6 @@
 import './loading.css'
 
-export default function Loading() {
+export function Loading() {
     return (
         <section className="loading">
             <div className="loaderCoctail"></div>
