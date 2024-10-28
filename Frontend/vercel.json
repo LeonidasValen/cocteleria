@@ -13,7 +13,7 @@
       "destination": "https://cocteleria-back.vercel.app/coctel/$1"
     },
     {
-      "source": "/(.*)",
+      "source": "/((?!auth|user|coctel).*)",
       "destination": "/index.html"
     }
   ]
