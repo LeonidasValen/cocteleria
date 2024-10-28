@@ -2,15 +2,15 @@
   "rewrites": [
     {
       "source": "/auth/(.*)", 
-      "destination": "/api/auth/$1"
+      "destination": "https://cocteleria-back.vercel.app/auth/$1"
     },
     {
       "source": "/user/(.*)", 
-      "destination": "/api/user/$1"
+      "destination": "https://cocteleria-back.vercel.app/user/$1"
     },
     {
       "source": "/coctel/(.*)", 
-      "destination": "/api/coctel/$1"
+      "destination": "https://cocteleria-back.vercel.app/coctel/$1"
     },
     {
       "source": "/(.*)", 

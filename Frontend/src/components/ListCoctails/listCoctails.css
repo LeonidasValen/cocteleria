@@ -9,7 +9,7 @@
 .coctailArticle {
     display: flex;
     flex-direction: column;
-    padding: 1rem;
+    padding: 0.8rem;
     border: 1px solid #363636;
     background: #202020;
     border-radius: 10px;
@@ -26,7 +26,8 @@
 .coctailImg img {
     width: 100%;
     height: 100%;
-    border-radius: 10px;
+    aspect-ratio: 3/2;
+    border-radius: 6px;
     object-fit: cover;
 }
 

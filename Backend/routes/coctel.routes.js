@@ -1,10 +1,13 @@
 import { Router } from 'express'
-import { getAllCoctels, postCoctel } from '../controllers/coctel.controller.js'
+import { getAllCoctels, getCoctel, postCoctel } from '../controllers/coctel.controller.js'
 import { upload } from '../libs/multerImg.js'
+import { validateToken } from '../libs/validateJWT.js'
+import { validateId } from '../middleware/validateId.js'
 
 const router = Router()
 
 router.post('/postCoctel', upload, postCoctel)
 router.get('/getCoctels', getAllCoctels)
+router.get('/getCoctel/:id', validateId, getCoctel)
 
 export default router

@@ -1,59 +1,63 @@
 .modalCoctel {
+    background: #000000ac;
     position: fixed;
-    z-index: 1000;
-    width: 100%;
-    height: 100%;
     top: 0;
     left: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: .2s all;
-    overflow: auto;
+    width: 100%;
+    height: 100%;
+    padding-block: 2rem;
+    overflow-x: hidden;
+    overflow-y: overlay;
+    z-index: 1000;
 }
 
 .bgModal {
-    background: #000000ac;
-    position: sticky;
-    top: 0;
+    position: absolute;
     width: 100%;
     height: 100%;
 }
 
-.modalContent{
-    position: absolute;
+.modalContent {
+    background: #181818;
+    box-shadow: #000000bf 0 3px 10px;
+    position: relative;
+    top: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: #181818;
-    box-shadow: #000000bf 0 3px 10px;
-    width: 100%;
-    max-width: 915px;
-    min-width: 850px;
-    overflow: hidden;
     gap: 10px;
-    top: 3rem;
-    border-radius: 10px;
+    width: 100%;
+    margin: auto;
+    border-radius: 15px;
+    overflow: hidden;
 }
 
-.mImgCoctel{
+.loadingConetent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 4rem;
+}
+
+.mImgCoctel {
     position: relative;
     width: 100%;
     height: 430px;
     overflow: hidden;
 }
 
-.modalContent h1{
+.modalContent h1 {
     font-size: 2.5rem;
 }
 
-.mImgCoctel img{
+.mImgCoctel img {
     width: 100%;
     height: 100%;
+    
     object-fit: cover;
 }
 
-.closeModal{
+.closeModal {
     position: absolute;
     opacity: .9;
     background-color: #181818;
@@ -71,7 +75,7 @@
     cursor: pointer;
 }
 
-.mImgCoctel::after{
+.mImgCoctel::after {
     background: linear-gradient(0deg, #181818, transparent 50%);
     bottom: 0;
     left: 0;
@@ -82,84 +86,98 @@
     z-index: 2;
 }
 
-.info{
+.info {
     display: flex;
     flex-direction: column;
+    width: 100%;
     gap: 20px;
     padding: 0 1rem 2rem;
 }
 
-.info h3{
+.info h3 {
     font-size: 1.1rem;
     font-weight: 600;
     margin-bottom: 0.4rem;
 }
 
-.info p{
+.info p {
     font-weight: 400;
     color: #cfcfcf;
 }
 
-.info ul{
+.info ul {
     list-style: disc;
     list-style-position: inside;
     padding: 0 10px;
 }
-.info li{
+
+.info li {
     color: #cfcfcf;
     margin-bottom: 0.5rem;
 }
 
-.ingredientsCoctel{
-    display: flex;
-    justify-content: space-between;
+.modalContent h1 {
+    text-align: center;
 }
 
-.ingredColumn1, .ingredColumn2{
+.ingredientsCoctel {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.ingredColumn1,
+.ingredColumn2 {
     display: flex;
     flex-direction: column;
 }
 
-.tipoPreparacion{
+.tipoPreparacion {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1.5rem;
 }
 
-.tipoPreparacion h3{
+.tipoPreparacion h3 {
     margin: 0;
 }
 
-.metodoPreparacion{
+.metodoPreparacion {
     display: flex;
     align-items: center;
     gap: 0.4rem;
 }
 
-.metodoPreparacion img{
+.metodoPreparacion img {
     width: 24px;
     height: 24px;
 }
 
-.vasoCoctel{
+.vasoCoctel {
     display: flex;
     align-items: center;
     gap: 0.4rem;
 }
 
-.CategoryCoctel{
+.CategoryCoctel {
     display: grid;
 }
 
-.CategoryCoctel span{
+.CategoryCoctel span {
     margin-bottom: 8px;
 }
 
-.cEtiqueta{
+.cEtiqueta {
     display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
     gap: .5rem;
 }
-.cEtiqueta p{
+
+.cEtiqueta p {
     background: #e77912;
     border-radius: 16px;
     padding: 2px 10px;
@@ -167,21 +185,33 @@
     font-weight: 500;
 }
 
-.tipoVaso{
+.tipoVaso {
     display: flex;
     align-items: center;
     justify-content: start;
     gap: 0.2rem;
 }
 
-.tipoVaso svg{
+.tipoVaso svg {
     width: 24px;
     height: 24px;
 }
 
-@media screen and (max-width: 900px){
-    .modalContent{
-        top: 0;
+@media screen and (min-width: 900px) {
+    .modalContent {
+        max-width: 915px;
+        min-width: 850px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .modalCoctel {
+        padding: 0;
+    }
+
+    .modalContent {
         border-radius: 0;
+        height: 100%;
+        width: 100%;
     }
 }

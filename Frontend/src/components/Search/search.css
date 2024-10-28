@@ -1,0 +1,31 @@
+.search {
+    display: flex;
+    width: 100%;
+}
+
+.search button {
+    background: transparent;
+    color: var(--Font);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 50px;
+    border: 0;
+    border-radius: 10px 0 0 10px;
+}
+
+.search input {
+    background: transparent;
+    color: var(--Font);
+    outline: none;
+    width: 100%;
+    padding: 10px;
+    border: 0;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.search input::placeholder {
+    color: #aaa;
+}
