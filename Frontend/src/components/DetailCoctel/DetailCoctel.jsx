@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { IconCoctel } from "../../assets/icons"
-import Loading from "../loading/Loading"
+import {Loading} from "../loading/Loading"
 import { useGetCoctel } from "../../context/GetCoctelContext"
 import "./detailCoctel.css"
 
