@@ -8,7 +8,6 @@ export function ListCoctails() {
     const { coctels } = useCoctel();
     const [openModal, setOpenModal] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
-
     
     useEffect(() => { 
         const idCoctel = searchParams.get('idCoctel');

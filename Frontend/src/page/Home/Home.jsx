@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { ListCoctails } from '../../components/ListCoctails/ListCoctails'
 import { useCoctel } from '../../context/CoctelContext';
-import { Loading } from '../../components/loading/Loading';
+import { ListCoctails } from '../../components/ListCoctails/ListCoctails'
+import { Loading } from '../../components/Loading/Loading';
 import { Search } from '../../components/Search/Search';
 import { useLocation } from 'react-router';
 import './home.css'
@@ -15,7 +15,6 @@ export function Home() {
   //detecta los cambios en la url
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    console.log(params.toString());
     if (params.toString()) {
       getCoctels(params.toString());
     } else {

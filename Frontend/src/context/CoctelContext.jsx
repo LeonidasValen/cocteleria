@@ -16,10 +16,7 @@ export const CoctelProvider = ({ children }) => {
 
     const { fetchData, loading, error } = useAxios()
 
-    const [loadingModal, setLoadingModal] = useState(false);
-
     const [coctels, setCoctels] = useState([]);
-    const [coctelModal, setCoctelModal] = useState([]);
 
     const postCoctel = async (data) => {
         await fetchData({
@@ -42,7 +39,7 @@ export const CoctelProvider = ({ children }) => {
 
 
     return (
-        <CoctelContext.Provider value={{ loading, error, coctels, loadingModal, coctelModal, postCoctel, getCoctels, getCoctel }}>
+        <CoctelContext.Provider value={{ loading, error, coctels, loadingModal, coctelModal, postCoctel, getCoctels }}>
             {children}
         </CoctelContext.Provider>
     )

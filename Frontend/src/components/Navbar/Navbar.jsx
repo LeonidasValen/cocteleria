@@ -23,14 +23,14 @@ export function Navbar() {
     <nav className="navbar">
       <header className="navHeader">
         <Link to={"/"} className="navLogo">
-          <img src="./icons/logo.png" alt="logo" />
+          <img src="/icons/logo.png" alt="logo" />
         </Link>
         <ul className="navItems">
-          <li><Link to="/?cat=Alcohol">Alcohol</Link></li>
-          <li><Link to="/?cat=Notalcohol">Sin alcohol</Link></li>
-          <li><Link to="/?cat=Aperitivos">Aperitivos</Link></li>
-          <li><Link to="/?cat=Fuerte">Fuerte</Link></li>
-          <li><Link to="/?cat=Facil">Fácil</Link></li>
+          <li><Link to="/?hasAlcohol=true">Alcohol</Link></li>
+          <li><Link to="/?hasAlcohol=false">Sin alcohol</Link></li>
+          <li><Link to="/?categories=Aperitivos">Aperitivos</Link></li>
+          <li><Link to="/?categories=Fuerte">Fuerte</Link></li>
+          <li><Link to="/?categories=Fácil">Fácil</Link></li>
         </ul>
         <div className="item">
           {/* <Search /> */}
