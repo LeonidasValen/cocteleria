@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { ListCoctails } from '../../components/ListCoctails/ListCoctails'
 import { useCoctel } from '../../context/CoctelContext';
-import { Loading } from '../../components/loading/Loading';
+// import { ListCoctails } from '../../components/ListCoctails/ListCoctails'
+// import { Loading } from '../../components/loading/Loading';
 import { Search } from '../../components/Search/Search';
 import { useLocation } from 'react-router';
 import './home.css'
@@ -28,7 +28,7 @@ export function Home() {
       <section className='searchContent'>
         <Search />
       </section>
-      {loading ? <Loading /> : <ListCoctails />}
+      {/* {loading ? <Loading /> : <ListCoctails />} */}
     </main>
   )
 }
