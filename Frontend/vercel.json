@@ -2,19 +2,23 @@
   "redirects": [
     {
       "source": "/auth/(.*)",
-      "destination": "https://cocteleria-back.vercel.app/auth/$1"
+      "destination": "https://cocteleria-back.vercel.app/auth/$1",
+      "permanent": true
     },
     {
       "source": "/user/(.*)",
-      "destination": "https://cocteleria-back.vercel.app/user/$1"
+      "destination": "https://cocteleria-back.vercel.app/user/$1",
+      "permanent": true
     },
     {
       "source": "/coctel/(.*)",
-      "destination": "https://cocteleria-back.vercel.app/coctel/$1"
+      "destination": "https://cocteleria-back.vercel.app/coctel/$1",
+      "permanent": true
     },
     {
       "source": "/((?!auth|user|coctel).*)",
-      "destination": "/index.html"
+      "destination": "/index.html",
+      "permanent": true
     }
   ]
 }
