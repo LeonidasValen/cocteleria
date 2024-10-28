@@ -1,5 +1,5 @@
 {
-  "redirects": [
+  "rewrites": [
     {
       "source": "/auth/(.*)",
       "destination": "https://cocteleria-back.vercel.app/auth/$1"
@@ -11,10 +11,13 @@
     {
       "source": "/coctel/(.*)",
       "destination": "https://cocteleria-back.vercel.app/coctel/$1"
-    },
+    }
+  ],
+  "redirects": [
     {
       "source": "/(.*)",
-      "destination": "/index.html"
+      "destination": "/index.html",
+      "permanent": true
     }
   ]
 }
