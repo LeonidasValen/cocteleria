@@ -15,6 +15,6 @@
     {
       "source": "/coctel/(.*)",
       "destination": "https://cocteleria-back.vercel.app/coctel/$1"
-    },
+    }
   ]
 }
