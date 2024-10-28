@@ -8,11 +8,27 @@ import './home.css'
 
 export function Home() {
 
+  const { loading, getCoctels } = useCoctel();
 
+  const location = useLocation();
+
+  //detecta los cambios en la url
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    console.log(params.toString());
+    if (params.toString()) {
+      getCoctels(params.toString());
+    } else {
+      getCoctels('');
+    }
+  }, [location.search]);
 
   return (
     <main className="mainContainer">
-      hola
+      <section className='searchContent'>
+        <Search />
+      </section>
+      {loading ? <Loading /> : <ListCoctails />}
     </main>
   )
 }
