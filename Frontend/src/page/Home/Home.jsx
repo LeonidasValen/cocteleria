@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useCoctel } from '../../context/CoctelContext';
 import { ListCoctails } from '../../components/ListCoctails/ListCoctails'
-import { Loading } from '../../components/loading/Loading';
+import { Loading } from '../../components/Loading/Loading';
 import { Search } from '../../components/Search/Search';
 import { useLocation } from 'react-router';
 import './home.css'
