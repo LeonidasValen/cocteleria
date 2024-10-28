@@ -23,7 +23,7 @@ export function Navbar() {
     <nav className="navbar">
       <header className="navHeader">
         <Link to={"/"} className="navLogo">
-          <img src="./icons/logo.png" alt="logo" />
+          <img src="/icons/logo.png" alt="logo" />
         </Link>
         <ul className="navItems">
           <li><Link to="/?cat=Alcohol">Alcohol</Link></li>
