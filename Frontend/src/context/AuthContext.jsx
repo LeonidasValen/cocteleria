@@ -28,7 +28,7 @@ export const AuthProvider = ({children}) =>{
 
     const signIn = async(user) =>{
         const res = await fetchData({
-            url: 'https://cocteleria-back.vercel.app/auth/login',
+            url: '/auth/login',
             method: 'post',
             data: user,
         })
@@ -39,7 +39,7 @@ export const AuthProvider = ({children}) =>{
 
     const logout = async () => {
         await fetchData({
-            url: 'https://cocteleria-back.vercel.app/auth/logout',
+            url: '/auth/logout',
             method: 'post',
         });
 
@@ -53,7 +53,7 @@ export const AuthProvider = ({children}) =>{
         if (storedUsername) {
             try {
                 const res = await fetchData({
-                    url: 'https://cocteleria-back.vercel.app/user/user',
+                    url: '/user/user',
                     method: 'get',
                 });
                 if (!res) {
