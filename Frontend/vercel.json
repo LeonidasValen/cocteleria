@@ -16,7 +16,7 @@
       "permanent": true
     },
     {
-      "source": "/((?!auth|user|coctel).*)",
+      "source": "/(.*)",
       "destination": "/index.html",
       "permanent": true
     }
