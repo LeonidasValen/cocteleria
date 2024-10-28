@@ -5,11 +5,14 @@
       "src": "src/server.js",
       "use": "@vercel/node"
     }
+<<<<<<< HEAD
   ],
   "routes": [
     {
       "src": "/(.*)",
       "dest": "src/server.js"
     }
+=======
+>>>>>>> main
   ]
 }

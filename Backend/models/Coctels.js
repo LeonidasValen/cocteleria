@@ -9,8 +9,14 @@ const CoctelSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    ingredients: [String],
-    garnish: [String],
+    ingredients: {
+        type: [String],
+        required: true,
+    },
+    garnish: {
+        type: [String],
+        required: true
+    },
     hasAlcohol: {
         type: Boolean,
         required: true,
@@ -27,7 +33,10 @@ const CoctelSchema = new mongoose.Schema({
         type: String, // e.g., "Highball", "Martini"
         required: true,
     },
-    categories: [String],
+    categories: {
+        type: [String],
+        required: true,
+    },
     method: {
         type: String,
         required: true,

@@ -33,7 +33,7 @@ export function Navbar() {
           <li><Link to="/?cat=Facil">Fácil</Link></li>
         </ul>
         <div className="item">
-          <Search />
+          {/* <Search /> */}
           {isAuthenticated && user && (
             <>
             <button className="logout" onClick={handleLogout}>

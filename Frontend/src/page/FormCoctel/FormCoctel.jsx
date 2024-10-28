@@ -103,7 +103,7 @@ export function FormCoctel() {
         e.preventDefault();
 
         const errors = {};
-        if (!formData.name || !formData.categories.length || !formData.ingredients.length || !formData.garnish.length || !formData.typeMethod || !formData.glassType || !formData.method || !formData.history || !formData.note) {
+        if (!formData.name || !formData.categories.length || !formData.ingredients.length || !formData.garnish.length || !formData.typeMethod || !formData.glassType || !formData.method) {
             errors.name = 'El campo "Nombre" es obligatorio';
             errors.categories = 'La categoría es obligatoria';
             errors.ingredients = 'El ingrediente es obligatorio';
@@ -111,8 +111,6 @@ export function FormCoctel() {
             errors.typeMethod = 'El tipo de metodo es obligatorio';
             errors.glassType = 'El tipo de vaso es obligatorio';
             errors.method = 'El metodo es obligatorio';
-            errors.history = 'La historia es obligatoria';
-            errors.note = 'La nota es obligatoria';
         }
         if (formData.categories.length < 2) {
             errors.categories = 'debes seleccionar al menos 2 categorías';
@@ -151,9 +149,9 @@ export function FormCoctel() {
         formSend.append("hasAlcohol", formData.hasAlcohol);
         formSend.append("difficulty", formData.difficulty);
 
-        formSend.forEach((value, key) => {
-            console.log(`${key}: ${value}`);
-        });
+        // formSend.forEach((value, key) => {
+        //     console.log(`${key}: ${value}`);
+        // });
 
         try {
             await postCoctel(formSend);
