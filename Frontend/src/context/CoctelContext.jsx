@@ -55,7 +55,7 @@ export const CoctelProvider = ({ children }) => {
     }, [fetchData]);
 
     return (
-        <CoctelContext.Provider value={{ loading, error, coctels, loadingModal, coctelModal, postCoctel, getCoctels, getCoctel }}>
+        <CoctelContext.Provider value={{ loading, error, coctels, loadingModal, coctelModal, postCoctel, getCoctels }}>
             {children}
         </CoctelContext.Provider>
     )
