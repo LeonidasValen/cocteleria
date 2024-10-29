@@ -29,7 +29,6 @@ export function FormCoctel() {
 
     const [errors, setErrors] = useState({});
 
-    // State inicial del formulario con varios campos
     const [formData, setFormData] = useState({
         name: '',
         method: '',
