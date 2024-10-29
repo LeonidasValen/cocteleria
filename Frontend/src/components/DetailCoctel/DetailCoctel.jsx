@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { IconCoctel } from "../../assets/icons"
-import Loading from "../loading/Loading"
+import {Loading} from "../Loading/Loading"
 import { useGetCoctel } from "../../context/GetCoctelContext"
 import "./detailCoctel.css"
 
@@ -63,17 +63,17 @@ export default function DetailCoctel({ handleCloseModal, id }) {
                             </div>
                         </div>
                         <div className="tipoPreparacion">
-                            <div className="metodoPreparacion">
-                                <h3>Metodo de preparación:</h3>
-                                <img src="./icons/cocktail.png" alt="cocktail" />
-                                <p>{coctelsModal.typeMethod}</p>
-                            </div>
                             <div className="vasoCoctel">
                                 <h3>Vaso recomendado: </h3>
                                 <div className="tipoVaso">
                                     <IconCoctel />
                                     <p>{coctelsModal.glassType}</p>
                                 </div>
+                            </div>
+                            <div className="metodoPreparacion">
+                                <h3>Metodo de preparación:</h3>
+                                <img src="./icons/cocktail.png" alt="cocktail" />
+                                <p>{coctelsModal.typeMethod}</p>
                             </div>
                         </div>
                         <div className="metodoCoctel">
@@ -94,7 +94,7 @@ export default function DetailCoctel({ handleCloseModal, id }) {
                         )}
                     </div>
                 </div>
-            ): (
+            ) : (
                 <div className="modalContent">
                     <div className="loadingConetent">
                         <h1>Coctel no encontrado</h1>

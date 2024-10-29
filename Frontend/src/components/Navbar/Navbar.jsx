@@ -26,20 +26,20 @@ export function Navbar() {
           <img src="./icons/logo.png" alt="logo" />
         </Link>
         <ul className="navItems">
-          <li><Link to="/?cat=Alcohol">Alcohol</Link></li>
-          <li><Link to="/?cat=Notalcohol">Sin alcohol</Link></li>
-          <li><Link to="/?cat=Aperitivos">Aperitivos</Link></li>
-          <li><Link to="/?cat=Fuerte">Fuerte</Link></li>
-          <li><Link to="/?cat=Facil">Fácil</Link></li>
+          <li><Link to="/?hasAlcohol=true"  >Con alcohol</Link></li>
+          <li><Link to="/?hasAlcohol=false" >Sin alcohol</Link></li>
+          <li><Link to="/?categories=Aperitivo"  >Aperitivos</Link></li>
+          <li><Link to="/?categories=Fuerte"  >Fuerte</Link></li>
+          <li><Link to="/?categories=Fácil" >Fácil</Link></li>
         </ul>
         <div className="item">
           {/* <Search /> */}
           {isAuthenticated && user && (
             <>
-            <button className="logout" onClick={handleLogout}>
-              Cerrar sesión
-            </button>
-            <Link to="/formCoctel">Agregar cóctel</Link>
+              <button className="logout" onClick={handleLogout}>
+                Cerrar sesión
+              </button>
+              <Link to="/formCoctel">Agregar cóctel</Link>
             </>
           )
           }

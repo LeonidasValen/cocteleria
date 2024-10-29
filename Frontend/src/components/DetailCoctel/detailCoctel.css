@@ -41,8 +41,11 @@
 
 .mImgCoctel {
     position: relative;
+    display: flex;
+    align-items: center;
     width: 100%;
-    height: 430px;
+    height: fit-content;
+    max-height: 500px;
     overflow: hidden;
 }
 
@@ -53,7 +56,7 @@
 .mImgCoctel img {
     width: 100%;
     height: 100%;
-    
+    object-position: center;
     object-fit: cover;
 }
 
@@ -102,7 +105,7 @@
 
 .info p {
     font-weight: 400;
-    color: #cfcfcf;
+    color: var(--FontGray);
 }
 
 .info ul {
@@ -112,7 +115,7 @@
 }
 
 .info li {
-    color: #cfcfcf;
+    color: var(--FontGray);
     margin-bottom: 0.5rem;
 }
 
@@ -172,8 +175,10 @@
 
 .cEtiqueta {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     flex-wrap: wrap;
+    padding-inline: 1rem;
+    max-width: 600px;
     gap: .5rem;
 }
 
@@ -199,8 +204,8 @@
 
 @media screen and (min-width: 900px) {
     .modalContent {
-        max-width: 915px;
-        min-width: 850px;
+        max-width: 860px;
+        min-width: 840px;
     }
 }
 

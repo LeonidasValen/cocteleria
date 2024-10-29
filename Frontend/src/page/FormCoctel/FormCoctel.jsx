@@ -155,7 +155,7 @@ export function FormCoctel() {
 
         try {
             await postCoctel(formSend);
-            // navigate('/coctel');
+            navigate('/');
         } catch (error) {
             console.log(error);
         }
