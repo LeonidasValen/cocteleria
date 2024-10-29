@@ -1,14 +1,7 @@
-<<<<<<< HEAD
-import { useEffect } from 'react';
-import { useCoctel } from '../../context/CoctelContext';
-import { ListCoctails } from '../../components/ListCoctails/ListCoctails'
-import { Loading } from '../../components/Loading/Loading';
-=======
 import { useEffect, useState } from 'react';
 import { ListCoctails } from '../../components/ListCoctails/ListCoctails'
 import { useCoctel } from '../../context/CoctelContext';
 import {Loading} from '../../components/Loading/Loading';
->>>>>>> main
 import { Search } from '../../components/Search/Search';
 import { useLocation } from 'react-router';
 import './home.css'
@@ -24,11 +17,6 @@ export function Home() {
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-<<<<<<< HEAD
-    if (params.toString()) {
-      getCoctels(params.toString());
-    } else {
-=======
     const search = params.get('search');
     const categories = params.get('categories');
     const idCoctel = params.get('idCoctel');
@@ -36,7 +24,6 @@ export function Home() {
     const filtersChanged = search !== lastFilters.search || categories !== lastFilters.categories;
 
     if (isInitialLoad && !idCoctel && (!search && !categories)) {
->>>>>>> main
       getCoctels('');
       setIsInitialLoad(false); 
     } else if (filtersChanged) {
