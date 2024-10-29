@@ -1,19 +1,19 @@
 {
-  "redirects": [
+  "rewrites": [
     {
-      "source": "/auth/(.*)",
+      "source": "/auth/(.*)", 
       "destination": "https://cocteleria-back.vercel.app/auth/$1"
     },
     {
-      "source": "/user/(.*)",
+      "source": "/user/(.*)", 
       "destination": "https://cocteleria-back.vercel.app/user/$1"
     },
     {
-      "source": "/coctel/(.*)",
+      "source": "/coctel/(.*)", 
       "destination": "https://cocteleria-back.vercel.app/coctel/$1"
     },
     {
-      "source": "/((?!auth|user|coctel).*)",
+      "source": "/(.*)", 
       "destination": "/index.html"
     }
   ]

@@ -6,7 +6,7 @@ export function Footer() {
         <div className="copy">
             <span>© Copyright 2024 - Echo por Leonel Valenzuela</span>
             <ul className="links"><li>
-                <a href="" aria-label="link github" target="_blank">
+                <a href="https://github.com/LeonidasValen" aria-label="link github" target="_blank">
                     <IconGithub />
                 </a>
             </li>
@@ -16,7 +16,6 @@ export function Footer() {
                     </a>
                 </li>
             </ul>
-
         </div>
     )
 }
