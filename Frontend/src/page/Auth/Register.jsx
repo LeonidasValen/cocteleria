@@ -6,7 +6,7 @@ import './auth.css'
 
 export function Register() {
 
-  const { register, handleSubmit, formState: { errors } } = useForm(); // Cambiado `errorForm` a `errors`
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const [clientErrors, setClientErrors] = useState({}); // errores del cliente con el formulario
 
   const navigate = useNavigate()
