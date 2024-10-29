@@ -15,7 +15,7 @@ export function Login() {
 
   const onSubmit = handleSubmit(async (values) => {
     try {
-      const res = await signIn(values)
+      await signIn(values)
       navigate("/")
     } catch (error) {
       setClientErrors(error || "error en el servidor")

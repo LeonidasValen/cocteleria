@@ -8,6 +8,7 @@ export const Cocteles = [
     { value: 'Moderno', label: 'Moderno'},
     { value: 'Aperitivo', label: 'Aperitivo'},
     { value: 'Suave', label: 'Suave'},
+    { value: 'Moderado', label: 'Moderado'},
     { value: 'Fuerte', label: 'Fuerte'},
     { value: 'Dulce', label: 'Dulce'},
     { value: 'Amargo', label: 'Amargo'},

@@ -15,7 +15,7 @@ export function Register() {
 
   const onSubmit = handleSubmit(async (values) => {
     try {
-      const res = await signUp(values)
+      await signUp(values)
       navigate("/loginAuth")
     } catch (error) {
       setClientErrors(error || "error en el servidor")
