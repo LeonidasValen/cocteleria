@@ -29,7 +29,7 @@
     font-weight: 500;
 }
 
-.rInputs input {
+.rInputs input{
     padding: 10px;
     outline: transparent solid 2px;
     outline-offset: 2px;
