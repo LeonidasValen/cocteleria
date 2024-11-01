@@ -21,3 +21,12 @@
     border-radius: 10px;
     gap: 12px;
 }
+
+.loadingCoctails{
+    margin: auto;
+    height: 100%;
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    justify-content: center;
+}

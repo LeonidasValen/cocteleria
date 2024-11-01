@@ -30,8 +30,8 @@ export const postCoctel = async (req, res) => {
 
 export const getAllCoctels = async (req, res) => {
 
-    const { search, hasAlcohol, difficulty, typeMethod, categories, page = 1, limit = 10 } = req.query;
-    console.log(hasAlcohol);
+    const { search, hasAlcohol, difficulty, typeMethod, categories, page = 1, limit = 16 } = req.query;
+
     try {
 
         const skip = (page - 1) * limit;

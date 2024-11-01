@@ -19,16 +19,17 @@ export function Home() {
     const params = new URLSearchParams(location.search);
     const search = params.get('search');
     const categories = params.get('categories');
+    const hasAlcohol = params.get('hasAlcohol');
     const idCoctel = params.get('idCoctel');
 
-    const filtersChanged = search !== lastFilters.search || categories !== lastFilters.categories;
+    const filtersChanged = search !== lastFilters.search || categories !== lastFilters.categories || hasAlcohol !== lastFilters.hasAlcohol;
 
-    if (isInitialLoad && !idCoctel && (!search && !categories)) {
+    if (isInitialLoad && !idCoctel && (!search && !categories && !hasAlcohol)) {
       getCoctels('');
       setIsInitialLoad(false); 
     } else if (filtersChanged) {
       getCoctels(params.toString());
-      setLastFilters({ search, categories });
+      setLastFilters({ search, categories, hasAlcohol });
     }else if (isInitialLoad) {
       getCoctels('')
       setIsInitialLoad(false);
@@ -40,7 +41,7 @@ export function Home() {
       <section className='searchContent'>
         <Search />
       </section>
-      {loading ? <Loading /> : <ListCoctails />}
+      {loading ? (<section className='loadingCoctails'><Loading /></section>) : <ListCoctails />} 
     </main>
   )
 }
