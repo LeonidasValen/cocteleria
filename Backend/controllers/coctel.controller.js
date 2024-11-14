@@ -32,11 +32,15 @@ export const getAllCoctels = async (req, res) => {
 
     const { search, hasAlcohol, difficulty, typeMethod, categories, page = 1, limit = 16 } = req.query;
 
-    try {
+    // Validar y convertir page y limit a enteros
+    const pageNum = parseInt(page, 10);
+    const limitNum = parseInt(limit, 10);
 
-        const skip = (page - 1) * limit;
+    try {
+        const skip = (pageNum - 1) * limitNum;
 
         const query = {}
+
         if (hasAlcohol !== undefined) {
             query.hasAlcohol = hasAlcohol === 'true';  // Convertimos el string a booleano
         }
@@ -50,16 +54,30 @@ export const getAllCoctels = async (req, res) => {
         }
 
         if (categories) {
-            query.categories = { $in: categories.split(',') };  // Si llega como un array o separado por comas
+            // Si 'categories' es un string, lo convertimos a un array usando split
+            const categoryArray = Array.isArray(categories) ? categories : categories.split(',');
+            query.categories = { $in: categoryArray };  // Filtrar por categorías
         }
 
         if (search) {
             query.name = { $regex: search, $options: 'i' };  // Búsqueda por título insensible a mayúsculas
         }
-        
-        const coctel = await Coctels.find(query).skip(skip).limit(parseInt(limit));
 
-        res.status(200).json(coctel);
+        // Obtener los cocteles con paginación
+        const cocteles = await Coctels.find(query).skip(skip).limit(limitNum);
+
+        // Obtener el número total de cocteles para la paginación
+        const totalCoctels = await Coctels.countDocuments(query);
+
+        const totalPages = Math.ceil(totalCoctels / limitNum);
+
+        res.status(200).json(
+            {
+                cocteles,
+                totalPages
+            }
+        );
+
     } catch (error) {
         console.log(error);
         res.status(500).json(error);

@@ -16,10 +16,7 @@ export const CoctelProvider = ({ children }) => {
 
     const { fetchData, loading, error } = useAxios()
 
-    const [loadingModal, setLoadingModal] = useState(false);
-
     const [coctels, setCoctels] = useState([]);
-    const [coctelModal, setCoctelModal] = useState([]);
 
     const postCoctel = async (data) => {
         await fetchData({
@@ -32,30 +29,22 @@ export const CoctelProvider = ({ children }) => {
         })
     }
 
-    const getCoctels = useCallback(async (data) => {
+    const getCoctels = useCallback(async (data, page) => {
         const res = await fetchData({
-            url: `/coctel/getCoctels/?${data}`,
+            url: `/coctel/getCoctels/?${data}&page=${page}`,
             method: 'get',
         });
-        setCoctels(res);
-    }, [fetchData]);
-
-    const getCoctel = useCallback(async (id) => {
-        try {
-            const res = await fetchData({
-                url: `/coctel/getCoctel/${id}`,
-                method: 'get',
-            })
-            setCoctelModal(res)
-        } catch (error) {
-            console.log(error);
-        }finally{
-            setLoadingModal(false);
-        }
+        setCoctels((prevCoctels) => {
+            if (page === 1) return res; // Reemplaza los datos si es la primera página
+            return {
+                ...prevCoctels,
+                cocteles: [...(prevCoctels.cocteles || []), ...res.cocteles], // Acumula las nuevas páginas
+            };
+        });
     }, [fetchData]);
 
     return (
-        <CoctelContext.Provider value={{ loading, error, coctels, loadingModal, coctelModal, postCoctel, getCoctels }}>
+        <CoctelContext.Provider value={{ loading, error, coctels, postCoctel, getCoctels}}>
             {children}
         </CoctelContext.Provider>
     )

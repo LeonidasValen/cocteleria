@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useState } from "react"
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react"
 import { useAxios } from "../hooks/UseAxios"
 
 
@@ -26,8 +26,15 @@ export const GetCoctelProvider = ({ children }) => {
         setCoctelsModal(res)
     }, [fetchData]);
 
+    const modalCoctel = useMemo(() => ({
+        loading,
+        error,
+        coctelsModal,
+        getCoctel,
+    }), [loading, error, coctelsModal, getCoctel])
+
     return (
-        <GetCoctelContext.Provider value={{ loading, error,  coctelsModal, getCoctel }}>
+        <GetCoctelContext.Provider value={modalCoctel}>
             {children}
         </GetCoctelContext.Provider>
     )

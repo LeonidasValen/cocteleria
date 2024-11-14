@@ -1,7 +1,6 @@
 import { Router } from 'express'
 import { getAllCoctels, getCoctel, postCoctel } from '../controllers/coctel.controller.js'
 import { upload } from '../libs/multerImg.js'
-import { validateToken } from '../libs/validateJWT.js'
 import { validateId } from '../middleware/validateId.js'
 
 const router = Router()

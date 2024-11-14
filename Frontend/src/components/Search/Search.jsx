@@ -10,7 +10,7 @@ export function Search() {
     const [searchParams] = useSearchParams()
 
     useEffect(() => {
-        const searchFromUrl = searchParams.get('search'); 
+        const searchFromUrl = searchParams.get('search');
         if (searchFromUrl) {
             setSearch(searchFromUrl);
         } else {
@@ -18,11 +18,11 @@ export function Search() {
         }
     }, [searchParams]);
 
-    
+
     //al hacer clic en el boton buscar
     const handleSearch = () => {
-        if (search.trim()) { 
-            const newSearchParams = new URLSearchParams(searchParams.toString()); 
+        if (search.trim()) {
+            const newSearchParams = new URLSearchParams(searchParams.toString());
             newSearchParams.set('search', search);
             navigate(`/?${newSearchParams.toString()}`, { replace: true }); // Navega a la nueva URL sin reemplazar los filtros existentes
         } else {
@@ -40,10 +40,12 @@ export function Search() {
         }
     };
 
-  return (
-    <div className='search'>
-        <button><IconSearch /></button>
-        <input type="text" placeholder='search...'  value={search} onChange={e => setSearch(e.target.value)} onKeyDown={handleKeyDown}/>
-    </div>
-  )
+    return (
+        <div className='searchContent'>
+            <div className='search'>
+                <button><IconSearch /></button>
+                <input type="text" placeholder='search...' value={search} onChange={e => setSearch(e.target.value)} onKeyDown={handleKeyDown} />
+            </div>
+        </div>
+    )
 }

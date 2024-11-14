@@ -9,6 +9,14 @@
     gap: 20px;
 }
 
+.search-filter{
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    max-width: 600px;
+    height: 40px;
+}
+
 .searchContent{
     background: #1d1d1e;
     display: flex;
