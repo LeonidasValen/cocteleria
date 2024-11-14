@@ -29,17 +29,22 @@ export const CoctelProvider = ({ children }) => {
         })
     }
 
-    const getCoctels = useCallback(async (data) => {
+    const getCoctels = useCallback(async (data, page) => {
         const res = await fetchData({
-            url: `/coctel/getCoctels/?${data}`,
+            url: `/coctel/getCoctels/?${data}&page=${page}`,
             method: 'get',
         });
-        setCoctels(res);
+        setCoctels((prevCoctels) => {
+            if (page === 1) return res; // Reemplaza los datos si es la primera página
+            return {
+                ...prevCoctels,
+                cocteles: [...(prevCoctels.cocteles || []), ...res.cocteles], // Acumula las nuevas páginas
+            };
+        });
     }, [fetchData]);
 
-
     return (
-        <CoctelContext.Provider value={{ loading, error, coctels, loadingModal, coctelModal, postCoctel, getCoctels }}>
+        <CoctelContext.Provider value={{ loading, error, coctels, postCoctel, getCoctels}}>
             {children}
         </CoctelContext.Provider>
     )

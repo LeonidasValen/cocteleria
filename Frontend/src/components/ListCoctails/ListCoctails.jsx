@@ -4,17 +4,22 @@ import DetailCoctel from '../DetailCoctel/DetailCoctel';
 import { useCoctel } from '../../context/CoctelContext';
 import './listCoctails.css'
 
-export function ListCoctails() {
-    const { coctels } = useCoctel();
+export function ListCoctails({coctels}) {
+
+    //const { coctels } = useCoctel();
+
     const [openModal, setOpenModal] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
     
     useEffect(() => { 
         const idCoctel = searchParams.get('idCoctel');
         if (idCoctel) {
+
             setOpenModal(true);
+            document.documentElement.style.overflow = 'hidden'; 
         }else{
             setOpenModal(false);
+            document.documentElement.style.overflow = 'auto'
         }
     },[searchParams]);
 
@@ -33,7 +38,7 @@ export function ListCoctails() {
     return (
         <section className='ListCoctails'>
             {coctels.length > 0 ? (
-                coctels.map((coctail) => (
+               coctels.map((coctail) => (
                     <article
                         className='coctailArticle'
                         key={`coctel=${coctail._id}`}

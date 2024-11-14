@@ -251,8 +251,9 @@ export function FormCoctel() {
                 <div className="inputTipo">
                     <label htmlFor="typeMethod ">Tipo de metodo:</label>
                     <select name="typeMethod" id="typeMethod" value={formData.typeMethod} onChange={handleChange}>
-                        <option value="Metodo directo">Metodo directo</option>
+                        <option value="Metodo Directo">Metodo directo</option>
                         <option value="Machacado">Machacado</option>
+                        <option value="Escanciado o Throwing">Escanciado o Throwing</option>
                         <option value="Refrescado">Refrescado</option>
                         <option value="Agitado">Agitado</option>
                     </select>
