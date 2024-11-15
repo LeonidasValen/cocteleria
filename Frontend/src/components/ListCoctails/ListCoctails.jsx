@@ -55,7 +55,7 @@ export function ListCoctails({coctels}) {
                     </article>
                 ))
             ) : (
-                <h1>ningún cóctel</h1>
+                <h1>No se econtro ningún cóctel</h1>
             )}
             {openModal && (< DetailCoctel id={searchParams.get('idCoctel')} handleCloseModal={handleCloseModal} />)}
         </section>

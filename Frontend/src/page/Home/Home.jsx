@@ -13,9 +13,14 @@ export function Home() {
 
   const [page, setPage] = useState(1);
   const [loadingMore, setLoadingMore] = useState(false);
-
-  const [lastFilters, setLastFilters] = useState({ search: null, categories: null, hasAlcohol: null });
   const [isInitialLoad, setIsInitialLoad] = useState(true);
+
+    const [lastFilters, setLastFilters] = useState({
+    search: null,
+    categories: null,
+    hasAlcohol: null,
+    typeMethod: null,
+  });
 
   const fetchCoctels = useCallback(() => {
     const params = new URLSearchParams(location.search);
@@ -31,7 +36,7 @@ export function Home() {
       typeMethod !== lastFilters.typeMethod ||
       hasAlcohol !== lastFilters.hasAlcohol;
 
-    if (isInitialLoad || filtersChanged ||( page > 1 && loadingMore)) {
+    if ( isInitialLoad || filtersChanged || ( page > 1 && loadingMore)) {
       if (!idCoctel && (!search && !categories && !hasAlcohol && !typeMethod)) {
         getCoctels('' , page);
       } else {
@@ -44,7 +49,7 @@ export function Home() {
       setIsInitialLoad(false);
       setLoadingMore(false);
     }
-  }, [location.search, getCoctels, page, isInitialLoad]);
+  }, [location.search, getCoctels, page]);
 
   useEffect(() => {
     fetchCoctels();
@@ -68,11 +73,15 @@ export function Home() {
       </section>
 
       {loading && isInitialLoad ? (
-        <section className='loadingCoctails'>
+        <section className="loadingCoctails">
           <Loading />
         </section>
+      ) : coctels?.cocteles?.length > 0 ? ( // Verifica si cocteles está definido y tiene elementos
+        <ListCoctails coctels={coctels.cocteles} />
       ) : (
-        coctels.cocteles ? (<ListCoctails coctels={coctels.cocteles}/>) : (<h1>No se econtraron cocteles</h1>)
+        <section>
+          <p>No se encontraron cócteles.</p>
+        </section>
       )}
 
       {loadingMore && <Loading />}
