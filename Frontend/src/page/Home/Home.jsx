@@ -77,14 +77,24 @@ export function Home() {
       </section>
 
       {loading && loadingMore ? (
-        <section className='loadingCoctails'>
+        // Muestra solo el indicador de carga inicial al cargar la página
+        <section className="loadingCoctails">
           <Loading />
         </section>
       ) : (
-        coctels.cocteles ? (
-          <ListCoctails coctels={coctels.cocteles} />
+        coctels?.cocteles && coctels?.cocteles.length > 0 ? (
+          <>
+            <ListCoctails coctels={coctels.cocteles} />
+            {loadingMore && <Loading />}
+          </>
         ) : (
-          <h1>No se encontraron cócteles</h1>
+          loading ? (
+            <section className="loadingCoctails">
+              <Loading />
+            </section>
+          ) : (
+            <h1>No se encontraron cócteles</h1>
+          )
         )
       )}
 
