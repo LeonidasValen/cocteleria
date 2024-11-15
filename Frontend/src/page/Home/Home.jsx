@@ -73,20 +73,15 @@ export function Home() {
       </section>
 
       {loading && isInitialLoad ? (
-        // Mostrar el indicador de carga inicial
         <section className="loadingCoctails">
           <Loading />
         </section>
-      ) : coctels?.cocteles?.length > 0 ? (
-        // Mostrar la lista de cócteles si hay resultados
+      ) : coctels?.cocteles?.length > 0 ? ( // Verifica si cocteles está definido y tiene elementos
         <ListCoctails coctels={coctels.cocteles} />
       ) : (
-        // Mostrar mensaje solo si no hay resultados y no se está cargando
-        !loading && (
-          <section>
-            <p>No se encontraron cócteles.</p>
-          </section>
-        )
+        <section>
+          <p>No se encontraron cócteles.</p>
+        </section>
       )}
 
       {loadingMore && <Loading />}
