@@ -40,15 +40,13 @@ export function Home() {
 
     // Solo obtiene los cocteles si es necesario
     if (!idCoctel && !search && !categories && !hasAlcohol && !typeMethod) {
-      getCoctels('', page); 
+      getCoctels('', page);
     } else {
       getCoctels(params.toString(), page); // Usar la página actual con filtros
     }
 
-    setLoadingMore(false); 
+    setLoadingMore(false);
   }, [location.search, page, lastFilters]);
-
-  console.log(coctels)
 
   useEffect(() => {
     fetchCoctels();
@@ -61,7 +59,7 @@ export function Home() {
       // Si llegamos al final de la página y no estamos cargando más cócteles
       if (scrollTop + clientHeight >= scrollHeight - 1 && page < coctels.totalPages && !loadingMore) {
         setPage((prevPage) => prevPage + 1);
-        setLoadingMore(true); 
+        setLoadingMore(true);
       }
     };
 
@@ -99,6 +97,8 @@ export function Home() {
       )}
 
       {loadingMore && <Loading />}
+
+
     </main>
   );
 }
