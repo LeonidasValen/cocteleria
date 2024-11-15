@@ -30,7 +30,7 @@ export const postCoctel = async (req, res) => {
 
 export const getAllCoctels = async (req, res) => {
 
-    const { search, hasAlcohol, difficulty, typeMethod, categories, page = 1, limit = 16 } = req.query;
+    const { search, hasAlcohol, difficulty, typeMethod, categories, page = 1, limit = 10 } = req.query;
 
     // Validar y convertir page y limit a enteros
     const pageNum = parseInt(page, 10);
