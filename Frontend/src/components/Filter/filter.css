@@ -1,5 +1,33 @@
 .filterContent{
     position: relative;
+    display: flex;
+    gap: 20px;
+}
+
+.filterContent select{
+    background: #1d1d1e;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 5px;
+    box-shadow: #000000bf 0 3px 10px;
+    border: 1px solid rgb(54, 54, 54);
+    border-radius: 10px;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 500;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+    appearance: none;
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/9/9d/Caret_down_font_awesome_whitevariation.svg');
+    background-repeat: no-repeat, repeat;
+    background-position: right .6em top 50%, 0 0;
+    background-size: 1em auto, 100%;
+}
+
+.filterContent select option{
+    border-radius: 10px;
 }
 
 .filter{
@@ -46,9 +74,6 @@
     margin-bottom: 10px;
 }
 
-.filterModal .fColumn:not(:last-child){
-    border-right: 1px solid #9b9b9b;
-}
 
 .fItems li{
     display: flex;
@@ -84,4 +109,34 @@
 
 .fItems li .checkbox.checked svg{
     transform: scale(1);
+}
+
+
+
+@media screen and (min-width: 695px){
+    .filterModal .fColumn:not(:last-child){
+        border-right: 1px solid #9b9b9b;
+    }
+}
+
+@media screen and (min-width: 410px){
+    .filterModal .fColumn:nth-child(2n + 1){
+        border-right: 1px solid #9b9b9b;
+    }
+}
+
+@media screen and (max-width: 695px){
+    .filterModal{
+        min-width: 350px;
+        transform: translate(0, 0);
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 410px){
+    .filterModal{
+        min-width: 200px;
+        transform: translate(0, 0);
+        grid-template-columns: repeat(1, 1fr);
+    }
 }

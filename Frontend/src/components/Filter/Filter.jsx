@@ -12,39 +12,39 @@ const filterCategories = {
 
 export function Filter() {
   const [filterModal, setFilterModal] = useState(false);
-  const menuDrop = useRef(null)
-  const buttonRef = useRef(null);
+  const [hasAlcohol, setHasAlcohol] = useState("");
+  const [selectedFilters, setSelectedFilters] = useState({
+    categories: [],
+    typeMethod: []
+  });
 
-  // cerrar menú al hacer clic fuera de él
+  const menuDrop = useRef(null);
+  const buttonRef = useRef(null);
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // Cierra el menú si haces clic fuera de él
   const handleClickOutside = (event) => {
     if (
+      filterModal && // Solo se cierra si está abierto
       menuDrop.current &&
-      !menuDrop.current.contains(event.target) && // Si el clic no es en el menú
+      !menuDrop.current.contains(event.target) &&
       buttonRef.current &&
-      !buttonRef.current.contains(event.target)   // Y no es en el botón
+      !buttonRef.current.contains(event.target)
     ) {
       setFilterModal(false);
     }
   };
 
   useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside)
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [])
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [filterModal]);
 
-  //Filtro
-  const [selectedFilters, setSelectedFilters] = useState({
-    categories: [],
-    typeMethod: []
-  });
-  const location = useLocation();
-  const navigate = useNavigate();
-
-  // Función para manejar la selección de checkboxes
+  // Maneja la selección de filtros y actualiza la URL
   const handleCheckbox = (category, value) => {
-    const queryParams = new URLSearchParams(location.search);
     const updatedFilters = selectedFilters[category].includes(value)
       ? selectedFilters[category].filter(item => item !== value)
       : [...selectedFilters[category], value];
@@ -54,28 +54,46 @@ export function Filter() {
       [category]: updatedFilters
     }));
 
-    // Actualiza la URL con los filtros seleccionados
+    const queryParams = new URLSearchParams(location.search);
     queryParams.delete(category);
     updatedFilters.forEach(val => queryParams.append(category, val));
     navigate(`/?${queryParams.toString()}`, { replace: true });
   };
 
+  // Manejador para el filtro de alcohol
+  const handleAlcoholChange = (e) => {
+    const value = e.target.value;
+    setHasAlcohol(value);
+    const queryParams = new URLSearchParams(location.search);
+    if (value) {
+      queryParams.set("hasAlcohol", value);
+    } else {
+      queryParams.delete("hasAlcohol");
+    }
+    navigate(`/?${queryParams.toString()}`, { replace: true });
+  };
+
+  // Sincroniza el estado de filtros con la URL al cargar o cambiar la URL
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    const filtersFromUrl = {
+    setSelectedFilters({
       categories: params.getAll("categories"),
-      typeMethod: params.getAll("typeMethod")
-    };
+      typeMethod: params.getAll("typeMethod"),
+      hasAlcohol: params.get("hasAlcohol") || ""
+    });
 
-    if (filtersFromUrl.categories.length || filtersFromUrl.typeMethod.length) {
-      setFilterModal(true);
-    }
-    setSelectedFilters(filtersFromUrl);
   }, [location.search]);
 
   return (
     <div className="filterContent">
-      <button className="filter" onClick={() => setFilterModal((prev) => !prev)} ref={buttonRef}>
+
+      <select onChange={handleAlcoholChange} value={hasAlcohol}>
+        <option value="">Todos</option>
+        <option value="true">Con Alcohol</option>
+        <option value="false">Sin Alcohol</option>
+      </select>
+
+      <button className="filter" onClick={() => setFilterModal(prev => !prev)} ref={buttonRef}>
         <div className="iconFilter">
           <IconFilter />
         </div>
@@ -89,10 +107,7 @@ export function Filter() {
             <ul className="fItems">
               {filterCategories.dificultad.map((dificultad) => (
                 <li key={`dificultad ${dificultad}`} onClick={() => handleCheckbox("categories", dificultad)}>
-                  <div
-                    className={`checkbox ${selectedFilters['categories']?.includes(dificultad) ? 'checked' : ''
-                      }`}
-                  >
+                  <div className={`checkbox ${selectedFilters['categories']?.includes(dificultad) ? 'checked' : ''}`}>
                     <IconCheck />
                   </div>
                   {dificultad}
@@ -106,10 +121,7 @@ export function Filter() {
             <ul className="fItems">
               {filterCategories.sabor.map((sabor) => (
                 <li key={`sabor ${sabor}`} onClick={() => handleCheckbox("categories", sabor)}>
-                  <div
-                    className={`checkbox ${selectedFilters['categories']?.includes(sabor) ? 'checked' : ''
-                      }`}
-                  >
+                  <div className={`checkbox ${selectedFilters['categories']?.includes(sabor) ? 'checked' : ''}`}>
                     <IconCheck />
                   </div>
                   {sabor}
@@ -123,10 +135,7 @@ export function Filter() {
             <ul className="fItems">
               {filterCategories.metodo.map((metodo) => (
                 <li key={`metodo ${metodo}`} onClick={() => handleCheckbox("typeMethod", metodo)}>
-                  <div
-                    className={`checkbox ${selectedFilters['typeMethod']?.includes(metodo) ? 'checked' : ''
-                      }`}
-                  >
+                  <div className={`checkbox ${selectedFilters['typeMethod']?.includes(metodo) ? 'checked' : ''}`}>
                     <IconCheck />
                   </div>
                   {metodo}
@@ -140,10 +149,7 @@ export function Filter() {
             <ul className="fItems">
               {filterCategories.otros.map((otros) => (
                 <li key={`otros ${otros}`} onClick={() => handleCheckbox("categories", otros)}>
-                  <div
-                    className={`checkbox ${selectedFilters['categories']?.includes(otros) ? 'checked' : ''
-                      }`}
-                  >
+                  <div className={`checkbox ${selectedFilters['categories']?.includes(otros) ? 'checked' : ''}`}>
                     <IconCheck />
                   </div>
                   {otros}
