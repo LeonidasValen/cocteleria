@@ -72,7 +72,7 @@ export function Home() {
         <Filter />
       </section>
 
-      {loading && isInitialLoad ? (
+      {loading && !isInitialLoad ? (
         <section className="loadingCoctails">
           <Loading />
         </section>
