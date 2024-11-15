@@ -8,19 +8,13 @@ import { Filter } from '../../components/Filter/Filter';
 import './home.css';
 
 export function Home() {
-  const { loading, getCoctels, coctels } = useCoctel();
+  const { loading, getCoctels, coctels, setCoctels } = useCoctel();
   const location = useLocation();
 
   const [page, setPage] = useState(1);
   const [loadingMore, setLoadingMore] = useState(false);
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
 
-    const [lastFilters, setLastFilters] = useState({
-    search: null,
-    categories: null,
-    hasAlcohol: null,
-    typeMethod: null,
-  });
+  const [lastFilters, setLastFilters] = useState({ search: null, categories: null, hasAlcohol: null, typeMethod: null });
 
   const fetchCoctels = useCallback(() => {
     const params = new URLSearchParams(location.search);
@@ -30,40 +24,50 @@ export function Home() {
     const hasAlcohol = params.get('hasAlcohol');
     const idCoctel = params.get('idCoctel');
 
+    // Determina si los filtros han cambiado
     const filtersChanged =
       search !== lastFilters.search ||
       categories !== lastFilters.categories ||
       typeMethod !== lastFilters.typeMethod ||
       hasAlcohol !== lastFilters.hasAlcohol;
 
-    if ( isInitialLoad || filtersChanged || ( page > 1 && loadingMore)) {
-      if (!idCoctel && (!search && !categories && !hasAlcohol && !typeMethod)) {
-        getCoctels('' , page);
-      } else {
-        getCoctels(params.toString(), page);
-        setPage(1);
-      }
-      if (filtersChanged) {
-        setLastFilters({ search, categories, hasAlcohol, typeMethod });
-      }
-      setIsInitialLoad(false);
-      setLoadingMore(false);
+    if (filtersChanged) {
+      // Si los filtros han cambiado, reinicia la página a 1 y borra los cocteles previos
+      setPage(1);
+      setCoctels({ cocteles: [], totalPages: 0 });
+      setLastFilters({ search, categories, hasAlcohol, typeMethod });
     }
-  }, [location.search, getCoctels, page]);
+
+    // Solo obtiene los cocteles si es necesario
+    if (!idCoctel && !search && !categories && !hasAlcohol && !typeMethod) {
+      getCoctels('', page); 
+    } else {
+      getCoctels(params.toString(), page); // Usar la página actual con filtros
+    }
+
+    setLoadingMore(false); 
+  }, [location.search, page, lastFilters]);
+
+  console.log(coctels)
 
   useEffect(() => {
     fetchCoctels();
   }, [page, fetchCoctels]);
 
-  window.onscroll = function () {
-    // if the page has reached to the bottom
-    const { scrollHeight, clientHeight, scrollTop } = document.documentElement;
+  useEffect(() => {
+    const handleScroll = () => {
+      const { scrollHeight, clientHeight, scrollTop } = document.documentElement;
 
-    if (scrollTop + clientHeight >= scrollHeight - 1 && page < coctels.totalPages) {
-      setPage((prevPage) => prevPage + 1);
-      setLoadingMore(true);
-    }
-  };
+      // Si llegamos al final de la página y no estamos cargando más cócteles
+      if (scrollTop + clientHeight >= scrollHeight - 1 && page < coctels.totalPages && !loadingMore) {
+        setPage((prevPage) => prevPage + 1);
+        setLoadingMore(true); 
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [page, coctels.totalPages, loadingMore]);
 
   return (
     <main className="mainContainer">
@@ -72,19 +76,20 @@ export function Home() {
         <Filter />
       </section>
 
-      {loading && isInitialLoad ? (
-        <section className="loadingCoctails">
+      {loading && loadingMore ? (
+        <section className='loadingCoctails'>
           <Loading />
         </section>
-      ) : coctels?.cocteles?.length > 0 ? ( // Verifica si cocteles está definido y tiene elementos
-        <ListCoctails coctels={coctels.cocteles} />
       ) : (
-        <section>
-          <p>No se encontraron cócteles.</p>
-        </section>
+        coctels.cocteles ? (
+          <ListCoctails coctels={coctels.cocteles} />
+        ) : (
+          <h1>No se encontraron cócteles</h1>
+        )
       )}
 
       {loadingMore && <Loading />}
     </main>
   );
 }
+
