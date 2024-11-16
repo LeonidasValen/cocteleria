@@ -34,7 +34,7 @@ export const getAllCoctels = async (req, res) => {
 
     // Validar y convertir page y limit a enteros
     const pageNum = parseInt(page, 10);
-    const limitNum = parseInt(limit, 16);
+    const limitNum = parseInt(limit, 10);
 
     try {
         const skip = (pageNum - 1) * limitNum;
