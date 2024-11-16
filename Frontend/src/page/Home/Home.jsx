@@ -12,36 +12,36 @@ export function Home() {
   const location = useLocation();
 
   const [page, setPage] = useState(1);
-  const [loadingMore, setLoadingMore] = useState(false);
+  const [loadingMore, setLoadingMore] = useState(true);
 
   const [lastFilters, setLastFilters] = useState({ search: null, categories: null, hasAlcohol: null, typeMethod: null });
 
   const fetchCoctels = useCallback(() => {
     const params = new URLSearchParams(location.search);
     const search = params.get('search');
-    const categories = params.get('categories');
-    const typeMethod = params.get('typeMethod');
+    const categories = params.getAll('categories'); // Captura todos los valores de categorías
+    const typeMethod = params.getAll('typeMethod'); // Captura todos los valores de métodos
     const hasAlcohol = params.get('hasAlcohol');
-    //const idCoctel = params.get('idCoctel');
-
-    // Determina si los filtros han cambiado
+  
+    // Comparar si los filtros han cambiado
     const filtersChanged =
       search !== lastFilters.search ||
-      categories !== lastFilters.categories ||
-      typeMethod !== lastFilters.typeMethod ||
-      hasAlcohol !== lastFilters.hasAlcohol;
-
+      hasAlcohol !== lastFilters.hasAlcohol ||
+      JSON.stringify(categories) !== JSON.stringify(lastFilters.categories) ||
+      JSON.stringify(typeMethod) !== JSON.stringify(lastFilters.typeMethod);
+  
+    console.log(loadingMore, filtersChanged);
+  
     if (loadingMore || filtersChanged) {
       if (filtersChanged) {
         setPage(1);
-        console.log(1); // Página inicial
         setCoctels({ cocteles: [], totalPages: 0 });
         setLastFilters({ search, categories, hasAlcohol, typeMethod });
         getCoctels(params.toString(), 1); // Forzar página 1
       } else {
         getCoctels(params.toString(), page); // Usar el valor actual de page
       }
-
+  
       setLoadingMore(false);
     }
   }, [location.search, page, lastFilters, loadingMore]);
@@ -95,7 +95,6 @@ export function Home() {
       )}
 
       {loadingMore && <Loading />}
-
 
     </main>
   );
