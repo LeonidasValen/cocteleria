@@ -22,7 +22,7 @@ export function Home() {
     const categories = params.get('categories');
     const typeMethod = params.get('typeMethod');
     const hasAlcohol = params.get('hasAlcohol');
-    const idCoctel = params.get('idCoctel');
+    //const idCoctel = params.get('idCoctel');
 
     // Determina si los filtros han cambiado
     const filtersChanged =
@@ -31,24 +31,20 @@ export function Home() {
       typeMethod !== lastFilters.typeMethod ||
       hasAlcohol !== lastFilters.hasAlcohol;
 
-    if (filtersChanged) {
-      // Si los filtros han cambiado, reinicia la página a 1 y borra los cocteles previos
-      setPage(1);
-      setCoctels({ cocteles: [], totalPages: 0 });
-      setLastFilters({ search, categories, hasAlcohol, typeMethod });
+    if (loadingMore || filtersChanged) {
+      if (filtersChanged) {
+        setPage(1);
+        console.log(1); // Página inicial
+        setCoctels({ cocteles: [], totalPages: 0 });
+        setLastFilters({ search, categories, hasAlcohol, typeMethod });
+        getCoctels(params.toString(), 1); // Forzar página 1
+      } else {
+        getCoctels(params.toString(), page); // Usar el valor actual de page
+      }
+
+      setLoadingMore(false);
     }
-
-    // Solo obtiene los cocteles si es necesario
-    if (!idCoctel && !search && !categories && !hasAlcohol && !typeMethod) {
-      getCoctels('', page); 
-    } else {
-      getCoctels(params.toString(), page); // Usar la página actual con filtros
-    }
-
-    setLoadingMore(false); 
-  }, [location.search, page, lastFilters]);
-
-  console.log(coctels)
+  }, [location.search, page, lastFilters, loadingMore]);
 
   useEffect(() => {
     fetchCoctels();
@@ -61,7 +57,8 @@ export function Home() {
       // Si llegamos al final de la página y no estamos cargando más cócteles
       if (scrollTop + clientHeight >= scrollHeight - 1 && page < coctels.totalPages && !loadingMore) {
         setPage((prevPage) => prevPage + 1);
-        setLoadingMore(true); 
+        setLoadingMore(true);
+
       }
     };
 
@@ -77,19 +74,30 @@ export function Home() {
       </section>
 
       {loading && loadingMore ? (
-        <section className='loadingCoctails'>
+        // Muestra solo el indicador de carga inicial al cargar la página
+        <section className="loadingCoctails">
           <Loading />
         </section>
       ) : (
-        coctels.cocteles ? (
-          <ListCoctails coctels={coctels.cocteles} />
+        coctels?.cocteles && coctels?.cocteles.length > 0 ? (
+          <>
+            <ListCoctails coctels={coctels.cocteles} />
+            {loadingMore && <Loading />}
+          </>
         ) : (
-          <h1>No se encontraron cócteles</h1>
+          loading ? (
+            <section className="loadingCoctails">
+              <Loading />
+            </section>
+          ) : (
+            <h1>No se encontraron cócteles</h1>
+          )
         )
       )}
 
       {loadingMore && <Loading />}
+
+
     </main>
   );
 }
-

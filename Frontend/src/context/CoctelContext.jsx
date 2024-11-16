@@ -30,7 +30,6 @@ export const CoctelProvider = ({ children }) => {
     }
 
     const getCoctels = useCallback(async (data, page) => {
-        console.log(data, page);	
         const res = await fetchData({
             url: `/coctel/getCoctels/?${data}&page=${page}`,
             method: 'get',
