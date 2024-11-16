@@ -58,7 +58,6 @@ export function Home() {
       if (scrollTop + clientHeight >= scrollHeight - 1 && page < coctels.totalPages && !loadingMore) {
         setPage((prevPage) => prevPage + 1);
         setLoadingMore(true);
-
       }
     };
 
