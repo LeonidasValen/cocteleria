@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router";
 import './filter.css';
 
 const filterCategories = {
-  dificultad: ["Fácil", "Medio", "Difícil"],
+  dificultad: ["Fácil", "Intermedio", "Difícil"],
   sabor: ["Dulce", "Fuerte", "Suave", "Amargo", "Refrescante", "Ácido", "Cremoso"],
   metodo: ["Metodo Directo", "Refrescado", "Machacado", "Agitado", "Escanciado o Throwing"],
   otros: ["Aperitivo", "Clásico", "Moderno", "Invierno", "Verano"]
