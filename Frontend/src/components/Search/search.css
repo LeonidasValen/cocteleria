@@ -29,3 +29,16 @@
 .search input::placeholder {
     color: #aaa;
 }
+
+@media screen and (max-width: 720px) {
+    .search-filter{
+        flex-direction: column;
+        height: 100% !important;
+    }
+    .searchContent{
+        max-width: 100% !important;
+    }
+    .filterContent{
+        justify-content: center;
+    }
+}

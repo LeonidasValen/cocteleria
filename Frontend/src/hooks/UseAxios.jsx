@@ -2,6 +2,7 @@ import { useState } from "react"
 import axios from "axios"
 
 axios.defaults.withCredentials = true
+axios.defaults.headers.common['Content-Type'] = 'application/json';
 
 export const useAxios = () => {
     const [loading, setLoading] = useState(true)
@@ -10,13 +11,13 @@ export const useAxios = () => {
     const fetchData = async ({ url, method, data, headers }) => {
         setLoading(true)
         setError([])
-
+        
         try {
             const response = await axios({
                 url,
                 method,
                 data,
-                headers,
+                headers
             })
             return response.data
         } catch (error) {

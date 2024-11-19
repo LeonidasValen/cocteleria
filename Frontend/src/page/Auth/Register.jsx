@@ -49,7 +49,7 @@ export function Register() {
         {Array.isArray(clientErrors) && clientErrors.map((err, index) => (
           <p className="fError" key={index}>{err}</p>
         ))}
-        <button className="bSubmit">Registrarse</button>
+        <button className="btnSubmit">Registrarse</button>
       </form>
     </div>
   )

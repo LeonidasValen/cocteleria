@@ -3,6 +3,9 @@ import Coctels from "../models/Coctels.js";
 export const postCoctel = async (req, res) => {
     const fileUrl = req.file?.path;
     const { name, categories, ingredients, garnish, glassType, typeMethod, hasAlcohol, difficulty, method, history, note } = req.body;
+    console.log( name, categories, ingredients, garnish, glassType, typeMethod, hasAlcohol, difficulty, method, history, note);
+    const coctelData = req.body;
+    console.log(coctelData);
     try {
 
         const coctel = new Coctels({
@@ -30,7 +33,7 @@ export const postCoctel = async (req, res) => {
 
 export const getAllCoctels = async (req, res) => {
 
-    const { search, hasAlcohol, difficulty, typeMethod, categories, page = 1, limit = 16 } = req.query;
+    const { search, hasAlcohol, difficulty, typeMethod, categories, page = 1, limit = 12 } = req.query;
 
     // Validar y convertir page y limit a enteros
     const pageNum = parseInt(page, 10);

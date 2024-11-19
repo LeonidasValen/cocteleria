@@ -16,7 +16,7 @@ export const CoctelProvider = ({ children }) => {
 
     const { fetchData, loading, error } = useAxios()
 
-    const [coctels, setCoctels] = useState([]);
+    const [coctels, setCoctels] = useState({ cocteles: [], totalPages: 0 });
 
     const postCoctel = async (data) => {
         await fetchData({
@@ -44,7 +44,7 @@ export const CoctelProvider = ({ children }) => {
     }, [fetchData]);
 
     return (
-        <CoctelContext.Provider value={{ loading, error, coctels, postCoctel, getCoctels}}>
+        <CoctelContext.Provider value={{ loading, error, coctels, postCoctel, getCoctels, setCoctels, setCoctels}}>
             {children}
         </CoctelContext.Provider>
     )
