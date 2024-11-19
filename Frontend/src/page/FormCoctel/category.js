@@ -4,7 +4,7 @@ export const Cocteles = [
     { value: 'Fácil', label: 'Fácil'},
     { value: 'Intermedio', label: 'Intermedio'},
     { value: 'Difícil', label: 'Difícil'},
-    { value: 'Clasico', label: 'Clasico'},
+    { value: 'Clasico', label: 'Clásico'},
     { value: 'Moderno', label: 'Moderno'},
     { value: 'Aperitivo', label: 'Aperitivo'},
     { value: 'Suave', label: 'Suave'},

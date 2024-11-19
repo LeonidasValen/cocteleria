@@ -44,7 +44,7 @@ export function Login() {
         {Array.isArray(clientErrors) && clientErrors.map((err, index) => (
           <p className="fError" key={index}>{err}</p>
         ))}
-        <button className="bSubmit">Iniciar sesion</button>
+        <button className="btnSubmit">Iniciar sesion</button>
       </form>
     </div>
   )

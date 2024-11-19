@@ -219,11 +219,11 @@ export function FormCoctel() {
                                     placeholder={`Ingrediente ${index + 1}`}
                                 />
                                 {formData.ingredients.length > 1 && (
-                                    <button type="button" onClick={() => handleRemoveInput(index, 'ingredients')}>X</button>
+                                    <button type="button" className="btnSubmit" onClick={() => handleRemoveInput(index, 'ingredients')}>X</button>
                                 )}
                             </div>
                         ))}
-                        <button type="button" onClick={() => handleAddInput('ingredients')}>Agregar Ingrediente</button>
+                        <button type="button" className="btnSubmit" onClick={() => handleAddInput('ingredients')}>Agregar Ingrediente</button>
                         {errors.ingredients && <div className="field-error">{errors.ingredients}</div>}
                     </div>
 
@@ -239,11 +239,11 @@ export function FormCoctel() {
                                     placeholder={`Garnish ${index + 1}`}
                                 />
                                 {formData.garnish.length > 1 && (
-                                    <button type="button" onClick={() => handleRemoveInput(index, 'garnish')}>X</button>
+                                    <button type="button" className="btnSubmit" onClick={() => handleRemoveInput(index, 'garnish')}>X</button>
                                 )}
                             </div>
                         ))}
-                        <button type="button" onClick={() => handleAddInput('garnish')}>Agregar Garnish</button>
+                        <button type="button" className="btnSubmit" onClick={() => handleAddInput('garnish')}>Agregar Garnish</button>
                         {errors.garnish && <div className="field-error">{errors.garnish}</div>}
                     </div>
                 </div>
@@ -284,7 +284,7 @@ export function FormCoctel() {
                 </div>
                 {errors.note && <div className="field-error">{errors.note}</div>}
 
-                <button type="submit">Subir cóctel</button>
+                <button type="submit" className="btnSubmit">Subir cóctel</button>
             </form>
         </main>
     );

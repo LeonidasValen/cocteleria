@@ -3,6 +3,9 @@ import Coctels from "../models/Coctels.js";
 export const postCoctel = async (req, res) => {
     const fileUrl = req.file?.path;
     const { name, categories, ingredients, garnish, glassType, typeMethod, hasAlcohol, difficulty, method, history, note } = req.body;
+    console.log( name, categories, ingredients, garnish, glassType, typeMethod, hasAlcohol, difficulty, method, history, note);
+    const coctelData = req.body;
+    console.log(coctelData);
     try {
 
         const coctel = new Coctels({

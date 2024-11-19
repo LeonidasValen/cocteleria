@@ -19,33 +19,34 @@ export function Search() {
     }, [searchParams]);
 
 
-    //al hacer clic en el boton buscar
     const handleSearch = () => {
         if (search.trim()) {
             const newSearchParams = new URLSearchParams(searchParams.toString());
             newSearchParams.set('search', search);
-            navigate(`/?${newSearchParams.toString()}`, { replace: true }); // Navega a la nueva URL sin reemplazar los filtros existentes
+            navigate(`/?${newSearchParams.toString()}`, { replace: true });
         } else {
-            // Si el campo está vacio, eliminamos 'search' de los parametros
             const newSearchParams = new URLSearchParams(searchParams.toString());
             newSearchParams.delete('search');
             navigate(`/?${newSearchParams.toString()}`, { replace: true });
         }
     };
-
-    // maneja la busqueda al presionar Enter
-    const handleKeyDown = (e) => {
-        if (e.key === 'Enter') {
-            handleSearch(); // llama la busqueda
-        }
+    
+    const handleFormSubmit = (e) => {
+        e.preventDefault(); // Evita que el formulario recargue la página
+        handleSearch(); // Ejecuta la búsqueda
     };
-
+    
     return (
-        <div className='searchContent'>
-            <div className='search'>
-                <button><IconSearch /></button>
-                <input type="text" placeholder='search...' value={search} onChange={e => setSearch(e.target.value)} onKeyDown={handleKeyDown} />
-            </div>
+        <div className="searchContent">
+            <form className="search" onSubmit={handleFormSubmit}>
+                <button type="submit"><IconSearch /></button>
+                <input
+                    type="text"
+                    placeholder="search..."
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                />
+            </form>
         </div>
-    )
+    );
 }
