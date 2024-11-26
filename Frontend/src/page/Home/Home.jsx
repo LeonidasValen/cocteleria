@@ -52,7 +52,7 @@ export function Home() {
     const handleScroll = () => {
       const { scrollHeight, clientHeight, scrollTop } = document.documentElement;
 
-      if (scrollTop + clientHeight >= scrollHeight - 1 && page < coctels.totalPages && !loadingMore) {
+      if (scrollTop + clientHeight >= scrollHeight - 100 && page < coctels.totalPages && !loadingMore) {
         setPage((prevPage) => prevPage + 1);
         setLoadingMore(true);
       }
