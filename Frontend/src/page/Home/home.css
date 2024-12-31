@@ -39,3 +39,10 @@
     display: flex;
     justify-content: center;
 }
+
+.loadingMore{
+    margin: auto;
+    height: 100%;
+    width: 100%;
+    padding: 2rem;
+}

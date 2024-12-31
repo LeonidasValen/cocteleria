@@ -3,9 +3,6 @@ import Coctels from "../models/Coctels.js";
 export const postCoctel = async (req, res) => {
     const fileUrl = req.file?.path;
     const { name, categories, ingredients, garnish, glassType, typeMethod, hasAlcohol, difficulty, method, history, note } = req.body;
-    console.log( name, categories, ingredients, garnish, glassType, typeMethod, hasAlcohol, difficulty, method, history, note);
-    const coctelData = req.body;
-    console.log(coctelData);
     try {
 
         const coctel = new Coctels({
@@ -90,7 +87,7 @@ export const getAllCoctels = async (req, res) => {
 export const getCoctel = async (req, res) => {
     try {
         const coctel = await Coctels.findById(req.params.id);
-        if (!coctel) return res.status(404).json({ message: "hotel no encontrado" })
+        if (!coctel) return res.status(404).json({ message: "Coctel no encontrado" })
         res.status(200).json(coctel);
     } catch (error) {
         console.log(error);

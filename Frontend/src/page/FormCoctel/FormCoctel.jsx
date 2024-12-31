@@ -148,10 +148,6 @@ export function FormCoctel() {
         formSend.append("hasAlcohol", formData.hasAlcohol);
         formSend.append("difficulty", formData.difficulty);
 
-        // formSend.forEach((value, key) => {
-        //     console.log(`${key}: ${value}`);
-        // });
-
         try {
             await postCoctel(formSend);
             navigate('/');

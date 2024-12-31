@@ -8,7 +8,7 @@ import { Filter } from '../../components/Filter/Filter';
 import './home.css';
 
 export function Home() {
-  const { loading, getCoctels, coctels, setCoctels } = useCoctel();
+  const { loading, getCoctels, coctels } = useCoctel();
   const location = useLocation();
 
   const [page, setPage] = useState(1);
