@@ -96,8 +96,6 @@ export const getCoctel = async (req, res) => {
         res.status(500).json(error);
     }
 }
-<<<<<<< HEAD
-=======
 
 export const updateCoctel = async (req, res) => {
     const { name, categories, ingredients, garnish, glassType, typeMethod, hasAlcohol, difficulty, method, history, note } = req.body;
@@ -152,4 +150,3 @@ export const deleteCoctel = async (req, res) => {
         res.status(500).json({ message: "Error al eliminar el coctel" });
     }
 }
->>>>>>> main
