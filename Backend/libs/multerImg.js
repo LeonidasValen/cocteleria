@@ -26,27 +26,32 @@ export const upload = multer({
 }).single("file");
 
 // Middleware para manejar la subida de la imagen
+
+// Middleware para manejar la subida de la imagen
 export const uploadImage = (req, res, next) => {
     upload(req, res, async (err) => {
         if (err instanceof multer.MulterError) {
-            // Error específico de Multer (por ejemplo, límite de tamaño de archivo alcanzado)
             console.error("Multer error:", err);
             return res.status(400).json({ error: `Error en la carga del archivo: ${err.message}` });
         } else if (err) {
-            // Otro tipo de error (conexión a Cloudinary, etc.)
             console.error("Error general:", err);
             return res.status(500).json({ error: "Error al procesar la imagen. Intenta nuevamente." });
         }
 
-        try {
-            // Si la imagen se sube correctamente, continuamos con la carga a Cloudinary
-            const cloudinaryResponse = await cloudinary.uploader.upload(req.file.path);
-            req.file.cloudinaryUrl = cloudinaryResponse.secure_url;
-            next();
-        } catch (cloudinaryErr) {
-            // Error en la conexión o en la carga a Cloudinary
-            console.error("Error al subir a Cloudinary:", cloudinaryErr);
-            return res.status(500).json({ error: "Error al conectar con Cloudinary. Intenta nuevamente." });
+        if (req.file) {
+            try {
+                const cloudinaryResponse = await cloudinary.uploader.upload(req.file.path, {
+                    folder: "blog",
+                });
+                req.file.cloudinaryUrl = cloudinaryResponse.secure_url;
+                req.file.public_id = cloudinaryResponse.public_id; // Guarda el public_id para eliminar si es necesario
+                next();
+            } catch (cloudinaryErr) {
+                console.error("Error al subir a Cloudinary:", cloudinaryErr);
+                return res.status(500).json({ error: "Error al conectar con Cloudinary. Intenta nuevamente." });
+            }
+        } else {
+            next(); // Continuar sin subir una nueva imagen
         }
     });
 };

@@ -29,6 +29,17 @@ export const CoctelProvider = ({ children }) => {
         })
     }
 
+    const updateCoctel = async (data, id) => {
+        await fetchData({
+            url: `/coctel/updateCoctel/${id}`,
+            method: 'put',
+            data: data,
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
+        })
+    }
+
     const getCoctels = useCallback(async (data, page) => {
         const res = await fetchData({
             url: `/coctel/getCoctels/?${data}&page=${page}`,
@@ -44,7 +55,7 @@ export const CoctelProvider = ({ children }) => {
     }, [fetchData]);
 
     return (
-        <CoctelContext.Provider value={{ loading, error, coctels, postCoctel, getCoctels, setCoctels, setCoctels}}>
+        <CoctelContext.Provider value={{ loading, error, coctels, postCoctel, getCoctels, updateCoctel, setCoctels}}>
             {children}
         </CoctelContext.Provider>
     )
