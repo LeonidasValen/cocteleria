@@ -11,7 +11,7 @@ export function Footer() {
                 </a>
             </li>
                 <li>
-                    <a href="mailto:leon.alberto4502@gmail.com">
+                    <a href="mailto:leon.alberto4502@gmail.com" aria-label="link email">
                         <IconEmail />
                     </a>
                 </li>

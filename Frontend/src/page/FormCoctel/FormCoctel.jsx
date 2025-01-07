@@ -37,8 +37,6 @@ export function FormCoctel() {
         }
     }, [location])
 
-    console.log(location);
-
     useEffect(() => {
         const storedUsername = localStorage.getItem('session_username');
 

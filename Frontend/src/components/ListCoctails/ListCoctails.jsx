@@ -4,24 +4,24 @@ import DetailCoctel from '../DetailCoctel/DetailCoctel';
 import { useCoctel } from '../../context/CoctelContext';
 import './listCoctails.css'
 
-export function ListCoctails({coctels}) {
+export function ListCoctails({ coctels }) {
 
     //const { coctels } = useCoctel();
 
     const [openModal, setOpenModal] = useState(false);
     const [searchParams, setSearchParams] = useSearchParams();
-    
-    useEffect(() => { 
+
+    useEffect(() => {
         const idCoctel = searchParams.get('idCoctel');
         if (idCoctel) {
 
             setOpenModal(true);
-            document.documentElement.style.overflow = 'hidden'; 
-        }else{
+            document.documentElement.style.overflow = 'hidden';
+        } else {
             setOpenModal(false);
             document.documentElement.style.overflow = 'auto'
         }
-    },[searchParams]);
+    }, [searchParams]);
 
     const handleDetailCoctel = (id) => {
         const newSearchParams = new URLSearchParams(searchParams.toString());
@@ -38,14 +38,17 @@ export function ListCoctails({coctels}) {
     return (
         <section className='ListCoctails'>
             {coctels.length > 0 ? (
-               coctels.map((coctail) => (
+                coctels.map((coctail) => (
                     <article
                         className='coctailArticle'
                         key={`coctel=${coctail._id}`}
                         onClick={() => handleDetailCoctel(coctail._id)}
                     >
                         <header className='coctailImg'>
-                            <img src={coctail.fileUrl} alt={coctail.name} />
+                            <img
+                                src={`${coctail.fileUrl.replace('/upload/', '/upload/f_auto,q_auto,w_300/')}`}
+                                alt={coctail.name}
+                            />
                         </header>
                         <h3 className='coctailName'>{coctail.name}</h3>
                         <div className='category'>

@@ -58,10 +58,11 @@
 }
 
 .category .isAlcoholic {
-    background: #e77912;
+    background: #cd6d13;
     border-radius: 16px;
     padding: 4px 10px;
     font-weight: 500;
+    color: white;
 }
 
 
