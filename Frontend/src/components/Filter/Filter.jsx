@@ -5,7 +5,7 @@ import './filter.css';
 
 const filterCategories = {
   dificultad: ["Fácil", "Intermedio", "Difícil"],
-  sabor: ["Dulce", "Fuerte", "Suave", "Amargo", "Refrescante", "Ácido", "Cremoso"],
+  sabor: ["Dulce", "Fuerte", "Suave", "Amargo", "Refrescante", "Cítrico", "Cremoso"],
   metodo: ["Metodo Directo", "Refrescado", "Machacado", "Agitado", "Escanciado o Throwing"],
   otros: ["Aperitivo", "Clásico", "Moderno", "Invierno", "Verano"]
 };
@@ -79,9 +79,9 @@ export function Filter() {
     setSelectedFilters({
       categories: params.getAll("categories"),
       typeMethod: params.getAll("typeMethod"),
-      hasAlcohol: params.get("hasAlcohol") || ""
     });
-
+    
+    setHasAlcohol(params.get("hasAlcohol") || "");
   }, [location.search]);
 
   return (

@@ -1,18 +1,26 @@
 import { useEffect } from "react"
-import { IconCoctel } from "../../assets/icons"
-import {Loading} from "../Loading/Loading"
+import { Link } from "react-router-dom"
+import { IconCoctel, IconDelete, IconEdit } from "../../assets/icons"
+import { Loading } from "../Loading/Loading"
 import { useGetCoctel } from "../../context/GetCoctelContext"
+import { useAuth } from "../../context/AuthContext"
 import "./detailCoctel.css"
 
 export default function DetailCoctel({ handleCloseModal, id }) {
 
     const { loading, getCoctel, coctelsModal } = useGetCoctel()
 
+    const { user } = useAuth()
+
     useEffect(() => {
         if (id) {
             getCoctel(id);
         }
     }, [id])
+
+    const handleDeleteCoctel = () => {
+        console.log("delete");
+    };
 
     if (loading) return (
         <section className="modalCoctel">
@@ -33,6 +41,14 @@ export default function DetailCoctel({ handleCloseModal, id }) {
                     <div className="mImgCoctel">
                         <img src={coctelsModal.fileUrl} alt="logo" />
                         <button className="closeModal" onClick={handleCloseModal}>X</button>
+                        {
+                            user && (
+                                <div className="editCoctel">
+                                    <Link to={`/formCoctel?edit=${coctelsModal._id}`} state={coctelsModal} className="editCoctelBtn"><IconEdit /></Link>
+                                    <button onClick={handleDeleteCoctel} className="editCoctelBtn"><IconDelete /></button>
+                                </div>
+                            )
+                        }
                     </div>
                     <h1>{coctelsModal.name}</h1>
 

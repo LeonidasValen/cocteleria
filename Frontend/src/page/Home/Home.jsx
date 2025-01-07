@@ -8,7 +8,7 @@ import { Filter } from '../../components/Filter/Filter';
 import './home.css';
 
 export function Home() {
-  const { loading, getCoctels, coctels, setCoctels } = useCoctel();
+  const { loading, getCoctels, coctels } = useCoctel();
   const location = useLocation();
 
   const [page, setPage] = useState(1);
@@ -52,7 +52,7 @@ export function Home() {
     const handleScroll = () => {
       const { scrollHeight, clientHeight, scrollTop } = document.documentElement;
 
-      if (scrollTop + clientHeight >= scrollHeight - 1 && page < coctels.totalPages && !loadingMore) {
+      if (scrollTop + clientHeight >= scrollHeight - 100 && page < coctels.totalPages && !loadingMore) {
         setPage((prevPage) => prevPage + 1);
         setLoadingMore(true);
       }

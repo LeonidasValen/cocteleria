@@ -30,16 +30,16 @@ export function Search() {
             navigate(`/?${newSearchParams.toString()}`, { replace: true });
         }
     };
-    
+
     const handleFormSubmit = (e) => {
         e.preventDefault(); // Evita que el formulario recargue la página
         handleSearch(); // Ejecuta la búsqueda
     };
-    
+
     return (
         <div className="searchContent">
             <form className="search" onSubmit={handleFormSubmit}>
-                <button type="submit"><IconSearch /></button>
+                <button type="submit" aria-label="search"><IconSearch /></button>
                 <input
                     type="text"
                     placeholder="search..."

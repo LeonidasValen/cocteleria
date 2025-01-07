@@ -85,6 +85,35 @@ html.modalCoctel{
     cursor: pointer;
 }
 
+.editCoctel{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    z-index: 3;
+    padding: 8px;
+    margin: 1em;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.editCoctel .editCoctelBtn {
+    background: rgba(78, 78, 78, 0.301);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid var(--FontGray);
+    height: 40px;
+    width: 40px;
+    border-radius: 50%;
+    color: var(--FontGray);
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+.editCoctel .editCoctelBtn:nth-child(2){
+    background: #e77912;
+} 
+
 .mImgCoctel::after {
     background: linear-gradient(0deg, #181818, transparent 50%);
     bottom: 0;

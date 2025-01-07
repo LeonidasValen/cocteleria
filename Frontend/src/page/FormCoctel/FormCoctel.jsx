@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { Cocteles } from './category';
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Select from 'react-select';
+import { Cocteles } from './category';
 import { IconCam } from "../../assets/icons";
 import { useAuth } from "../../context/AuthContext";
 import { useCoctel } from "../../context/CoctelContext";
@@ -11,9 +11,31 @@ export function FormCoctel() {
 
     const { loading, isAuthenticated, user } = useAuth();
 
-    const { postCoctel } = useCoctel();
+    const { postCoctel, updateCoctel } = useCoctel();
 
     const navigate = useNavigate();
+    const location = useLocation().state;
+
+    useEffect(() => {
+        if (location) {
+            document.documentElement.style.overflow = 'auto'
+        } else {
+            setFormData({
+                name: '',
+                method: '',
+                history: '',
+                note: '',
+                file: null,
+                typeMethod: 'Metodo directo',
+                glassType: '',
+                categories: [],
+                ingredients: [],
+                garnish: [],
+                hasAlcohol: false,
+                difficulty: 'fácil',
+            })
+        }
+    }, [location])
 
     useEffect(() => {
         const storedUsername = localStorage.getItem('session_username');
@@ -30,18 +52,18 @@ export function FormCoctel() {
     const [errors, setErrors] = useState({});
 
     const [formData, setFormData] = useState({
-        name: '',
-        method: '',
-        history: '',
-        note: '',
-        file: null,
-        typeMethod: 'Metodo directo',
-        glassType: '',
-        categories: [],
-        ingredients: [],
-        garnish: [],
-        hasAlcohol: false,
-        difficulty: 'Fácil',
+        name: location ? location.name : '',
+        method: location ? location.method : '',
+        history: location ? location.history : '',
+        note: location ? location.note : '',
+        file: location?.fileUrl ? location.fileUrl : null,
+        typeMethod: location ? location.typeMethod : 'Metodo directo',
+        glassType: location ? location.glassType : '',
+        categories: location ? location.categories : [],
+        ingredients: location ? location.ingredients : [],
+        garnish: location ? location.garnish : [],
+        hasAlcohol: location ? location.hasAlcohol : false,
+        difficulty: location ? location.difficulty : 'Fácil',
     });
 
     // Maneja los cambios en los campos de inputs
@@ -148,25 +170,39 @@ export function FormCoctel() {
         formSend.append("hasAlcohol", formData.hasAlcohol);
         formSend.append("difficulty", formData.difficulty);
 
-        // formSend.forEach((value, key) => {
-        //     console.log(`${key}: ${value}`);
-        // });
-
         try {
-            await postCoctel(formSend);
+            if (location) {
+                await updateCoctel(formSend, location._id);
+            } else {
+                await postCoctel(formSend);
+            }
             navigate('/');
         } catch (error) {
             console.log(error);
         }
     };
 
+    const getPreview = () => {
+        // Si hay una imagen en la nube usa la URL
+        if (formData.file && typeof formData.file === 'string' && formData.file.startsWith("http")) {
+            return formData.file;
+        }
+
+        // Si hay un archivo local (seleccionado por el usuario)
+        if (formData.file instanceof File) {
+            return URL.createObjectURL(formData.file);
+        }
+
+        return null; // Si no hay imagen o archivo, no mostramos nada
+    };
+
     return (
         <main className="formContent">
             <form className="formCoctel" onSubmit={handleSubmit}>
                 <div className="imgCoctel">
-                    {formData.file ? (
-                        <img src={typeof formData.file === "string" ? `./img/${formData.file}` : URL.createObjectURL(formData.file)} alt="Foto de portada" />
-                    ) : null}
+                    {getPreview() && (
+                        <img src={getPreview()} alt="Vista previa" />
+                    )}
                     {!formData.file && <IconCam />}
                     <input type="file" accept="image/png, image/jpeg, image/jpg" onChange={handleFileChange} />
                 </div>
@@ -194,7 +230,7 @@ export function FormCoctel() {
 
                 <div>
                     <label>Tiene alcohol?</label>
-                    <input type="checkbox"  name="hasAlcohol" checked={formData.hasAlcohol} onChange={handleChangeCheck} />
+                    <input type="checkbox" name="hasAlcohol" checked={formData.hasAlcohol} onChange={handleChangeCheck} />
                 </div>
 
                 <div>
@@ -284,7 +320,7 @@ export function FormCoctel() {
                 </div>
                 {errors.note && <div className="field-error">{errors.note}</div>}
 
-                <button type="submit" className="btnSubmit">Subir cóctel</button>
+                <button type="submit" className="btnSubmit">{location ? 'Actualizar' : 'Subir cóctel'}</button>
             </form>
         </main>
     );

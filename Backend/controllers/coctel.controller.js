@@ -1,11 +1,10 @@
+import { Cocteles } from "../../Frontend/src/page/FormCoctel/category.js";
 import Coctels from "../models/Coctels.js";
+import { v2 as cloudinary } from "cloudinary";
 
 export const postCoctel = async (req, res) => {
     const fileUrl = req.file?.path;
     const { name, categories, ingredients, garnish, glassType, typeMethod, hasAlcohol, difficulty, method, history, note } = req.body;
-    console.log( name, categories, ingredients, garnish, glassType, typeMethod, hasAlcohol, difficulty, method, history, note);
-    const coctelData = req.body;
-    console.log(coctelData);
     try {
 
         const coctel = new Coctels({
@@ -90,10 +89,67 @@ export const getAllCoctels = async (req, res) => {
 export const getCoctel = async (req, res) => {
     try {
         const coctel = await Coctels.findById(req.params.id);
-        if (!coctel) return res.status(404).json({ message: "hotel no encontrado" })
+        if (!coctel) return res.status(404).json({ message: "Coctel no encontrado" })
         res.status(200).json(coctel);
     } catch (error) {
         console.log(error);
         res.status(500).json(error);
     }
 }
+<<<<<<< HEAD
+=======
+
+export const updateCoctel = async (req, res) => {
+    const { name, categories, ingredients, garnish, glassType, typeMethod, hasAlcohol, difficulty, method, history, note } = req.body;
+    const coctelId = req.params.id;
+
+    const newImg = req.file?.cloudinaryUrl;
+    try {
+        const coctel = await Coctels.findById(coctelId);
+        if (!coctel) return res.status(404).json({ message: "Coctel no encontrado" });
+
+        // Si hay una imagen anterior, eliminarla de Cloudinary
+        if (coctel.img && coctel.img.includes("cloudinary")) {
+            const oldPublicId = coctel.img.split("/").pop().split(".")[0];
+            await cloudinary.uploader.destroy(`blog/${oldPublicId}`);
+        }
+
+        coctel.name = name || coctel.name;
+        coctel.categories = Array.isArray(categories) ? categories : categories.split(',') || coctel.categories;
+        coctel.ingredients = Array.isArray(ingredients) ? ingredients : ingredients.split(',') || coctel.ingredients;
+        coctel.garnish = Array.isArray(garnish) ? garnish : garnish.split(',') || coctel.garnish;
+        coctel.glassType = glassType || coctel.glassType;
+        coctel.typeMethod = typeMethod || coctel.typeMethod;
+        coctel.hasAlcohol = hasAlcohol || coctel.hasAlcohol;
+        coctel.difficulty = difficulty || coctel.difficulty;
+        coctel.method = method || coctel.method;
+        coctel.history = history || coctel.history;
+        coctel.note = note || coctel.note;
+
+        await coctel.save();
+
+        res.status(200).json({ message: "Coctel actualizado con éxito" });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Error al actualizar el coctel" });
+    }
+}
+
+export const deleteCoctel = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const coctel = await Cocteles.findById(id);
+
+        if (!coctel) {
+            return res.status(404).json({ message: "Coctel no encontrado" });
+        }
+
+        await coctel.remove();
+
+        res.status(200).json({ message: "Coctel eliminado con éxito" });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ message: "Error al eliminar el coctel" });
+    }
+}
+>>>>>>> main
