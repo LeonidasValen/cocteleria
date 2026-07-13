@@ -15,5 +15,5 @@ app.listen(3000, () => {
 });
 
 app.get("/", (req, res) => {
-  res.json("¡Bienvenido al backend, API de coctelería!");
+  res.json("¡Bienvenido al backend, esta es la API de coctelería!");
 });
