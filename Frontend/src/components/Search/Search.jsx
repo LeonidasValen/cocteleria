@@ -47,11 +47,7 @@ export function Search() {
                     onChange={(e) => setSearch(e.target.value)}
                 />
             </form>
-        </div>
-<<<<<<< HEAD
-    )
+        </div>   
+        )
 }
-=======
-    );
-}
->>>>>>> main
+

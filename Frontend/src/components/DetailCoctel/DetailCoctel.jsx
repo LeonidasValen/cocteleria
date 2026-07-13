@@ -44,7 +44,7 @@ export default function DetailCoctel({ handleCloseModal, id }) {
                         {
                             user && (
                                 <div className="editCoctel">
-                                    <Link to={`/formCoctel?edit=${coctelsModal._id}`} state={coctelsModal} className="editCoctelBtn"><IconEdit /></Link>
+                                    <Link to={`/formCoctel/?edit=${coctelsModal._id}`} state={coctelsModal} className="editCoctelBtn"><IconEdit /></Link>
                                     <button onClick={handleDeleteCoctel} className="editCoctelBtn"><IconDelete /></button>
                                 </div>
                             )

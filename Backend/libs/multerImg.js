@@ -1,57 +1,90 @@
-import { v2 as cloudinary } from "cloudinary";
-import { CloudinaryStorage } from 'multer-storage-cloudinary';
-import { CLOUD_API_KEY, CLOUD_API_SECRET, CLOUD_NAME } from "../src/config.js";
 import multer from "multer";
+import { v2 as cloudinary } from "cloudinary";
+import {
+    CLOUD_API_KEY,
+    CLOUD_API_SECRET,
+    CLOUD_NAME,
+} from "../src/config.js";
 
-// Configuración de Cloudinary con tus credenciales
+// Configuración de Cloudinary
 cloudinary.config({
     cloud_name: CLOUD_NAME,
     api_key: CLOUD_API_KEY,
     api_secret: CLOUD_API_SECRET,
 });
 
-// Configuración de multer para subir a Cloudinary
-const storage = new CloudinaryStorage({
-    cloudinary: cloudinary,
-    params: {
-        folder: 'cocteles',  // Carpeta en Cloudinary
-        allowed_formats: ['jpg', 'png', 'jpeg'], // Formatos permitidos
-    },
-});
+// Configuración de Multer
+const storage = multer.memoryStorage();
 
-// Middleware de multer para subir una imagen
-export const upload = multer({ 
-    storage, 
-    limits: { files: 1, fileSize: 5 * 1024 * 1024 }, // Limita el tamaño de la imagen a 5MB
+const fileFilter = (req, file, cb) => {
+    const allowedTypes = [
+        "image/jpeg",
+        "image/jpg",
+        "image/png",
+        "image/webp",
+    ];
+
+    if (allowedTypes.includes(file.mimetype)) {
+        cb(null, true);
+    } else {
+        cb(new Error("Solo se permiten imágenes JPG, JPEG, PNG o WEBP."));
+    }
+};
+
+const upload = multer({
+    storage,
+    fileFilter,
+    limits: {
+        files: 1,
+        fileSize: 5 * 1024 * 1024, // 5MB
+    },
 }).single("file");
 
-// Middleware para manejar la subida de la imagen
-
-// Middleware para manejar la subida de la imagen
 export const uploadImage = (req, res, next) => {
     upload(req, res, async (err) => {
         if (err instanceof multer.MulterError) {
-            console.error("Multer error:", err);
-            return res.status(400).json({ error: `Error en la carga del archivo: ${err.message}` });
-        } else if (err) {
-            console.error("Error general:", err);
-            return res.status(500).json({ error: "Error al procesar la imagen. Intenta nuevamente." });
+            return res.status(400).json({
+                error: `Error al subir el archivo: ${err.message}`,
+            });
         }
 
-        if (req.file) {
-            try {
-                const cloudinaryResponse = await cloudinary.uploader.upload(req.file.path, {
-                    folder: "blog",
-                });
-                req.file.cloudinaryUrl = cloudinaryResponse.secure_url;
-                req.file.public_id = cloudinaryResponse.public_id; // Guarda el public_id para eliminar si es necesario
-                next();
-            } catch (cloudinaryErr) {
-                console.error("Error al subir a Cloudinary:", cloudinaryErr);
-                return res.status(500).json({ error: "Error al conectar con Cloudinary. Intenta nuevamente." });
-            }
-        } else {
-            next(); // Continuar sin subir una nueva imagen
+        if (err) {
+            return res.status(400).json({
+                error: err.message,
+            });
+        }
+
+        // Si no enviaron imagen continúa normalmente
+        if (!req.file) {
+            return next();
+        }
+
+        try {
+            const result = await new Promise((resolve, reject) => {
+                const stream = cloudinary.uploader.upload_stream(
+                    {
+                        folder: "cocteles",
+                    },
+                    (error, result) => {
+                        if (error) return reject(error);
+                        resolve(result);
+                    }
+                );
+
+                stream.end(req.file.buffer);
+            });
+
+            // Información útil para el controlador
+            req.file.cloudinaryUrl = result.secure_url;
+            req.file.public_id = result.public_id;
+
+            next();
+        } catch (error) {
+            console.error(error);
+
+            return res.status(500).json({
+                error: "Error al subir la imagen a Cloudinary.",
+            });
         }
     });
 };
