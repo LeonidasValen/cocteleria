@@ -1,5 +1,5 @@
 {
-  "redirects": [
+  "rewrites": [
     {
       "source": "/auth/(.*)",
       "destination": "https://cocteleria-back.vercel.app/auth/$1"
