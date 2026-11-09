@@ -3,14 +3,22 @@ import Coctels from "../models/Coctels.js";
 import { v2 as cloudinary } from "cloudinary";
 
 export const postCoctel = async (req, res) => {
-    const fileUrl = req.file?.path;
+    // CORRECCIÓN: Leemos la URL que guardó nuestro middleware de Cloudinary
+    const fileUrl = req.file?.cloudinaryUrl; 
+    const public_id = req.file?.public_id; // Te sugiero guardar esto también
+
     const { name, categories, ingredients, garnish, glassType, typeMethod, hasAlcohol, difficulty, method, history, note } = req.body;
+    
     try {
+        // Validación por si la imagen es obligatoria en tu Base de Datos
+        if (!fileUrl) {
+            return res.status(400).json({ error: "La imagen del cóctel es obligatoria." });
+        }
 
         const coctel = new Coctels({
             name,
-            categories: Array.isArray(categories) ? categories : categories.split(','), // Asegúrate de convertir string a array si es necesario
-            ingredients: Array.isArray(ingredients) ? ingredients : ingredients.split(','), // Verifica si ingredients es un array, o conviértelo
+            categories: Array.isArray(categories) ? categories : categories.split(','), 
+            ingredients: Array.isArray(ingredients) ? ingredients : ingredients.split(','), 
             garnish: Array.isArray(garnish) ? garnish : garnish.split(','),
             glassType,
             typeMethod,
@@ -19,16 +27,19 @@ export const postCoctel = async (req, res) => {
             method,
             history,
             note,
-            fileUrl
+            fileUrl,       // Se guarda la URL de Cloudinary correctamente
+            public_id      // Guarda esto si tu modelo 'Coctels' tiene este campo (muy recomendado)
         });
+        
         await coctel.save();
 
         res.status(200).json({ message: "coctel creado correctamente" });
     } catch (error) {
         console.log(error);
-        res.status(500).json(error);
+        res.status(500).json({ error: "Error interno al guardar el cóctel" });
     }
 }
+
 
 export const getAllCoctels = async (req, res) => {
 

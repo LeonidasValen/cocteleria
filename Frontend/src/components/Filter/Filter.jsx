@@ -87,7 +87,7 @@ export function Filter() {
   return (
     <div className="filterContent">
 
-      <select onChange={handleAlcoholChange} value={hasAlcohol}>
+      <select name="selectAlchool" onChange={handleAlcoholChange} value={hasAlcohol}>
         <option value="">Todos</option>
         <option value="true">Con Alcohol</option>
         <option value="false">Sin Alcohol</option>

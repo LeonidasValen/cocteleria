@@ -10,17 +10,14 @@
     flex-direction: column;
     padding: 0.8rem;
     border: 1px solid #363636;
-    background: #202020;
+    background: #1a1a1a;
     border-radius: 10px;
     cursor: pointer;
-<<<<<<< HEAD
-=======
     transition: all 0.2s ease-in-out;
 }
 
 .coctailArticle:hover {
     transform: scale(1.02);
->>>>>>> main
 }
 
 .coctailImg {

@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { Link } from "react-router-dom"
-import { IconCoctel, IconDelete, IconEdit } from "../../assets/icons"
+import { IconCoctel, IconDelete, IconEdit, IconShaker } from "../../assets/icons"
 import { Loading } from "../Loading/Loading"
 import { useGetCoctel } from "../../context/GetCoctelContext"
 import { useAuth } from "../../context/AuthContext"
@@ -34,10 +34,10 @@ export default function DetailCoctel({ handleCloseModal, id }) {
     );
 
     return (
-        <section className="modalCoctel">
-            <div className="bgModal" onClick={handleCloseModal}></div>
+        <section className="modalCoctel" onClick={handleCloseModal}>
+            {/* <div className="bgModal" ></div> */}
             {coctelsModal ? (
-                <div className="modalContent">
+                <div className="modalContent" onClick={(e) => e.stopPropagation()}>
                     <div className="mImgCoctel">
                         <img src={coctelsModal.fileUrl} alt="logo" />
                         <button className="closeModal" onClick={handleCloseModal}>X</button>
@@ -57,20 +57,44 @@ export default function DetailCoctel({ handleCloseModal, id }) {
                             <p key={`cat ${cat}`}>{cat}</p>
                         ))}
                     </div>
+
                     <div className="info">
-                        <div className="CategoryCoctel">
+
+                        <div className="tipoPreparacion">
+                            <div className="metodoPreparacion">
+                                <IconCoctel />
+                                <div className="infoSquare">
+                                    <span>Vaso recomendado</span>
+                                    <div className="tipoVaso">
+                                        <p>{coctelsModal.glassType}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="metodoPreparacion">
+                                {/* <img src="./icons/cocktail.png" alt="cocktail" /> */}
+                                <IconShaker />
+                                <div className="infoSquare">
+                                    <span>Método de preparación</span>
+                                    <p>{coctelsModal.typeMethod}</p>
+                                </div>
+                            </div>
                         </div>
+
+
                         <div className="ingredientsCoctel ">
                             <div className="ingredColumn1">
-                                <h3>Ingredientes:</h3>
+                                <h3>Ingredientes</h3>
                                 <ul>
-                                    {coctelsModal.ingredients.map((ingredient) => (
-                                        <li key={`ingredient ${ingredient}`}>{ingredient}</li>
+                                    {coctelsModal.ingredients.map((ingredient, index) => (
+                                        <li key={`ingredient-${index}`}>
+                                            <p>{index + 1}</p>
+                                            <span>{ingredient}</span>
+                                        </li>
                                     ))}
                                 </ul>
                             </div>
                             <div className="ingredColumn1">
-                                <h3>Garnish:</h3>
+                                <h3>Garnish</h3>
                                 <ul>
                                     {coctelsModal.garnish.map((garnish) => (
                                         <li key={`garnish ${garnish}`}>{garnish}</li>
@@ -78,34 +102,21 @@ export default function DetailCoctel({ handleCloseModal, id }) {
                                 </ul>
                             </div>
                         </div>
-                        <div className="tipoPreparacion">
-                            <div className="vasoCoctel">
-                                <h3>Vaso recomendado: </h3>
-                                <div className="tipoVaso">
-                                    <IconCoctel />
-                                    <p>{coctelsModal.glassType}</p>
-                                </div>
-                            </div>
-                            <div className="metodoPreparacion">
-                                <h3>Metodo de preparación:</h3>
-                                <img src="./icons/cocktail.png" alt="cocktail" />
-                                <p>{coctelsModal.typeMethod}</p>
-                            </div>
-                        </div>
+
                         <div className="metodoCoctel">
-                            <h3>Método: </h3>
+                            <h3>Método</h3>
                             <p>{coctelsModal.method}</p>
                         </div>
                         {coctelsModal.history && (
                             <div className="historyCoctel">
-                                <h3>Historia: </h3>
-                                <p>{coctelsModal.history}</p>
+                                <h3>Historia</h3>
+                                <p className="detailInfo">{coctelsModal.history}</p>
                             </div>
                         )}
                         {coctelsModal.note && (
                             <div className="notaCoctel">
-                                <h3>Nota: </h3>
-                                <p>{coctelsModal.note}</p>
+                                <h3>Nota</h3>
+                                <p className="detailInfo">{coctelsModal.note}</p>
                             </div>
                         )}
                     </div>

@@ -1,17 +1,17 @@
 import multer from "multer";
 import { v2 as cloudinary } from "cloudinary";
+import { Readable } from "stream"; // Modificación: Necesario para procesar el buffer de Multer
 import {
     CLOUD_API_KEY,
     CLOUD_API_SECRET,
     CLOUD_NAME,
+    CLOUDINARY_URL
 } from "../src/config.js";
 
+console.log({ CLOUD_NAME, CLOUD_API_KEY, CLOUD_API_SECRET, CLOUDINARY_URL });
+
 // Configuración de Cloudinary
-cloudinary.config({
-    cloud_name: CLOUD_NAME,
-    api_key: CLOUD_API_KEY,
-    api_secret: CLOUD_API_SECRET,
-});
+cloudinary.config(CLOUDINARY_URL);
 
 // Configuración de Multer
 const storage = multer.memoryStorage();
@@ -60,18 +60,18 @@ export const uploadImage = (req, res, next) => {
         }
 
         try {
+            // Adaptación de la API: Convertimos el buffer en un stream y lo enviamos
             const result = await new Promise((resolve, reject) => {
-                const stream = cloudinary.uploader.upload_stream(
-                    {
-                        folder: "cocteles",
-                    },
+                const uploadStream = cloudinary.uploader.upload_stream(
+                    { folder: "cocteles" },
                     (error, result) => {
                         if (error) return reject(error);
                         resolve(result);
                     }
                 );
 
-                stream.end(req.file.buffer);
+                // Creamos el stream legible a partir del buffer y lo conectamos a Cloudinary
+                Readable.from(req.file.buffer).pipe(uploadStream);
             });
 
             // Información útil para el controlador
@@ -80,7 +80,7 @@ export const uploadImage = (req, res, next) => {
 
             next();
         } catch (error) {
-            console.error(error);
+            console.error("Cloudinary Error:", error);
 
             return res.status(500).json({
                 error: "Error al subir la imagen a Cloudinary.",
