@@ -344,6 +344,13 @@ html.modalCoctel {
     }
 
     .metodoPreparacion {
+        padding: 7px 10px;
+    }
+    .infoSquare span{
+        font-size: 12px;
+    }
+
+    .metodoPreparacion {
         flex-direction: column;
         height: 100%;
     }
